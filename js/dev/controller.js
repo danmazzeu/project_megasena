@@ -6,11 +6,13 @@ console.log(parsedData)
 // Generator
 const generatorForm = document.getElementById('generator');
 const generatorSelect = document.getElementById('generator-select');
+const generatorCardsDiv = document.getElementById('generator-cards');
 const generatorError = document.getElementById('generator-error');
 
 generatorSelect.addEventListener("change", function() {
     this.classList.remove('errorField');
     generatorError.style.display = 'none';
+    generatorCardsDiv.style.display = 'none';
 });
 
 generatorForm.addEventListener("submit", function(event) {
@@ -51,7 +53,6 @@ generatorForm.addEventListener("submit", function(event) {
         }
           
         function generatorCards(newCombination) {
-            const generatorCardsDiv = document.getElementById('generator-cards');
             generatorCardsDiv.innerHTML = '';
             generatorCardsDiv.style.display = 'grid';
             generatorError.style.display = 'flex';
