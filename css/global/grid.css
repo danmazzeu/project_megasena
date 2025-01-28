@@ -16,6 +16,12 @@
 
 @media all and (max-width: 700px) {
     .g-2 { grid-template-columns:  1fr; }
+    .g-6 { grid-template-columns:  repeat(3, 1fr); }
+    .g-10 { grid-template-columns:  repeat(3, 1fr); }
+}
+
+@media all and (max-width: 500px) {
+    .g-2 { grid-template-columns:  1fr; }
     .g-6 { grid-template-columns:  repeat(2, 1fr); }
     .g-10 { grid-template-columns:  repeat(2, 1fr); }
 }
