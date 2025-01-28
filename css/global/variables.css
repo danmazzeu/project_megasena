@@ -1,0 +1,99 @@
+:root {
+    /* Colors */
+    --theme: #252525;
+    --theme-hover: #111;
+    --primary: #555;
+    --secondary: #999;
+    --tertiary: #ddd;
+    --error-success: #2f7d4e;
+    --error-fail: #801c29;
+    --error-info: #114863;
+
+    /* Default */
+    --radius: 10px;
+    --max-width: 1200px;
+    --transition: all 0.3s ease-in-out;
+    --text-shadow: 1px 1px 1px #000;
+    --box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+
+    /* Body */
+    --body-gap: 30px;
+    --body-padding: 25px;
+    --body-bg: #f5f5f5;
+
+    /* Scrollbar */
+    --scrollbar-bg: #999;
+    --scrollbar-color: var(--theme);
+
+    /* Header */
+    --header-title-size: 35px;
+    --header-title-color: #fff;
+    --header-info-color: #999;
+    --header-span-color: #fff;
+
+    /* Main */
+    --main-gap: 30px;
+    --main-section-gap: 10px;
+    --main-section-bg: #fff;
+    --main-section-padding: 15px;
+
+    /* Footer */
+    --footer-text-shadow: 1px 1px 1px #fff;
+
+    /* Grid */
+    --grid-gap: 10px;
+
+    /* Wrapper */
+    --wrapper-padding: 10px;
+    --wrapper-border: 1px dashed #ccc;
+    --wrapper-bg: #fcfcfc;
+    --wwapper-gap: 10px;
+
+    /* Typography */
+    --typography-title-size: 16px;
+    --typography-description-size: 11px;
+
+    /* Field */
+    --field-gap: 5px;
+    --field-bg: #fff;
+    --field-border: 1px solid #ccc;
+    --field-border-hover: 1px solid var(--theme);
+    --field-padding: 15px;
+
+    /* Button */
+    --button-color: #fff;
+    --button-padding: 15px 20px;
+    --button-hover-bg: var(--theme-hover);
+
+    /* List */
+    --list-gap: 8px;
+
+    /* Error */
+    --error-gap: 10px;
+    --error-padding: 10px;
+    --error-icon-size: 18px;
+
+    /* Player */
+    --player-padding: 6px 10px;
+    --player-gap: 10px;
+    --player-border: 1px dashed #ccc;
+    --player-color: var(--theme);
+    --player-hover-color: var(--theme-hover);
+    --player-play-size: 25px;
+    --player-bg: #fcfcfc;
+
+    /* Number */
+    --number-gap: 5px;
+    --number-padding: 20px 15px;
+    --number-title-size: 20px;
+    --number-title-color: #fff;
+    --number-title-bg: #444;
+    --number-text-color: #ccc;
+    --number-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+
+    /* Loading */
+    --loading-height: 8px;
+    --loading-progressbar-color: #ccc;
+    --loading-percent-color: var(--theme);
+    --loading-bg: #f5f5f5;
+}

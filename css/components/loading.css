@@ -1,0 +1,59 @@
+.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99;
+    overflow: hidden;
+    display: none;
+    flex-direction: column;
+    gap: 25px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+    padding: 35px 50px;
+    background-color: var(--loading-bg);
+}
+
+.loading-logo {
+    font-size: 100px;
+    font-weight: 900;
+    color: var(--theme);
+    text-transform: uppercase;
+    text-shadow: var(--text-shadow);
+    animation: jello 2s infinite;
+    transform-origin: center;
+}
+
+.loading-progressbar {
+    width: 100%;
+    height: var(--loading-height);
+    overflow: hidden;
+    max-width: 500px;
+    border-radius: var(--radius);
+    box-shadow: var(--box-shadow);
+    background-color: var(--loading-progressbar-color);
+}
+
+.loading-percent {
+    width: 0px;
+    height: 100%;
+    background-color: var(--loading-percent-color);
+}
+
+.loading > span {
+    text-align: center;
+    line-height: 20px;
+    font-weight: 700;
+}
+
+.loading > p {
+    max-width: 400px;
+    text-align: center;
+}
+
+.loading-show {
+    display: flex;
+}

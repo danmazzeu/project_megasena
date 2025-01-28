@@ -1,0 +1,18 @@
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--field-gap);
+}
+
+.field input,
+.field select {
+    padding: var(--field-padding);
+    border: var(--field-border);
+    border-radius: var(--radius);
+    background-color: var(--field-bg);
+}
+
+.field input:not(:disabled):hover,
+.field select:not(:disabled):hover {
+    border: var(--field-border-hover);
+}

@@ -1,0 +1,17 @@
+main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--main-gap);
+    width: 100%;
+    max-width: var(--max-width);
+}
+
+main > section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--main-section-gap);
+    padding: var(--main-section-padding);
+    border-radius: var(--radius);
+    box-shadow: var(--box-shadow);
+    background-color: var(--main-section-bg);
+}

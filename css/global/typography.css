@@ -1,0 +1,18 @@
+.typography-title {
+    color: var(--theme);
+    font-size: var(--typography-title-size);
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.typography-paragraph {
+    color: var(--primary);
+    line-height: 18px;
+}
+
+.typography-description {
+    color: var(--secondary);
+    font-size: var(--typography-description-size);
+    line-height: 18px;
+    padding: 0 5px;
+}

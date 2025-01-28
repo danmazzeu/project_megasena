@@ -1,0 +1,15 @@
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--list-gap);
+}
+
+.list > li {
+    color: var(--primary);
+    font-weight: 700;
+}
+
+.list > li > span {
+    font-weight: normal;
+    margin-left: 5px;
+}
