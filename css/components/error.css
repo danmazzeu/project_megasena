@@ -10,6 +10,8 @@
     background-color: var(--wrapper-bg);
 }
 
+.error > p { font-weight: 700; }
+
 .error.fail { border-color: var(--error-fail); }
 .error.success { border-color: var(--error-success); }
 .error.info { border-color: var(--error-info); }
