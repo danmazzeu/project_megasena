@@ -57,16 +57,17 @@ generatorForm.addEventListener("submit", function(event) {
             generatorError.style.display = 'flex';
             generatorError.querySelector('p').innerText = 'Sequência gerada com sucesso.';
           
-            for (const number of newCombination) {
+            for (let i = 0; i < newCombination.length; i++) {
+                const number = newCombination[i];
                 const card = document.createElement('div');
                 card.classList.add('number');
                 card.innerHTML = `
                     <h3>${number ?? 'N/A'}</h3>
-                    <p>POS: ${number + 1}</p>
+                    <p>POS: ${i+1}</p>
                 `;
                 generatorCardsDiv.appendChild(card);
             }
-          }
+        }
           
         const newCombination = generateNewCombination(parsedData, generatorSelect.value);
         generatorCards(newCombination);
