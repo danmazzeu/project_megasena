@@ -5,7 +5,9 @@
 }
 
 .field input,
-.field select {
+.field select,
+.field input.errorField:not(:disabled),
+.field selec.errorFieldt:not(:disabled) {
     padding: var(--field-padding);
     border: var(--field-border);
     border-radius: var(--radius);
@@ -15,4 +17,9 @@
 .field input:not(:disabled):hover,
 .field select:not(:disabled):hover {
     border: var(--field-border-hover);
+}
+
+.field input:not(:disabled).errorField,
+.field select:not(:disabled).errorField {
+    border: var(--field-border-error);
 }

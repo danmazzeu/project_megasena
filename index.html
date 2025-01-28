@@ -37,10 +37,10 @@
         <script defer src="js/dev/select.js" type="module"></script>
         <script defer src="js/dev/number.js" type="module"></script>
         <script defer src="js/dev/loading.js" type="module"></script>
-        <script defer src="js/dev/controller.js"></script>
 
         <!-- Dev Scripts -->
         <script defer src="js/dev/player.js"></script>
+        <script defer src="js/dev/controller.js"></script>
     </head>
     <body>
 
@@ -88,48 +88,11 @@
                     </div>
                     <button type="submit">Gerar</button>
                 </form>
-                <div class="error success">
+                <div id="generator-error" class="error success">
                     <i class="bi bi-check-circle-fill"></i>
                     <p class="typography-paragraph">Error</p>
                 </div>
-                <div class="grid g-6">
-                    <div class="number">
-                        <h3>02</h3>
-                        <p>Pos: 01</p>
-                        <p>FA: 223</p>
-                        <p>FR: 1.09%</p>
-                    </div>
-                    <div class="number">
-                        <h3>02</h3>
-                        <p>Pos: 01</p>
-                        <p>FA: 223</p>
-                        <p>FR: 1.09%</p>
-                    </div>
-                    <div class="number">
-                        <h3>02</h3>
-                        <p>Pos: 01</p>
-                        <p>FA: 223</p>
-                        <p>FR: 1.09%</p>
-                    </div>
-                    <div class="number">
-                        <h3>02</h3>
-                        <p>Pos: 01</p>
-                        <p>FA: 223</p>
-                        <p>FR: 1.09%</p>
-                    </div>
-                    <div class="number">
-                        <h3>02</h3>
-                        <p>Pos: 01</p>
-                        <p>FA: 223</p>
-                        <p>FR: 1.09%</p>
-                    </div>
-                    <div class="number">
-                        <h3>02</h3>
-                        <p>Pos: 01</p>
-                        <p>FA: 223</p>
-                        <p>FR: 1.09%</p>
-                    </div>
-                </div>
+                <div id="generator-cards" class="grid g-6"></div>
             </section>
 
             <!-- Analysis Numbers & Positions -->
@@ -142,7 +105,7 @@
                     <i class="bi bi-play-circle-fill" data-audio="audio-02"></i>
                     <p class="typography-text">Instrução</p>
                 </div>
-                <form class="wrapper">
+                <form id="analysis-numbers" class="wrapper">
                     <div class="grid g-2">
                         <div class="field">
                             <select id="analysis-position-select-start"></select>
@@ -182,9 +145,9 @@
                     <i class="bi bi-play-circle-fill" data-audio="audio-03"></i>
                     <p class="typography-text">Instrução</p>
                 </div>
-                <form class="wrapper">
+                <form id="consult-sequence" class="wrapper">
                     <div class="field">
-                        <input class="sequence-mask" type="text" placeholder="00, 00, 00, 00, 00, 00">
+                        <input id="consult-sequence-input" class="sequence-mask" type="text" placeholder="00, 00, 00, 00, 00, 00">
                         <p class="typography-description">Realize o preenchimento com zeros à esquerda em números menores que 10, garantindo um formato de dois dígitos. Ex: 01, 02, 03.</p>
                     </div>
                     <button type="submit">Consultar</button>
@@ -205,9 +168,9 @@
                     <i class="bi bi-play-circle-fill" data-audio="audio-04"></i>
                     <p class="typography-text">Instrução</p>
                 </div>
-                <form class="wrapper">
+                <form id="consult-contest" class="wrapper">
                     <div class="field">
-                        <input class="contest-mask" type="text" placeholder="0">
+                        <input id="consult-contest-input" class="contest-mask" type="text" placeholder="0">
                         <p class="typography-description">Existem atualmente mais de 2800 concursos realizados pela Mega Sena. Consulte eles para ver suas respectivas informações.</p>
                     </div>
                     <button type="submit">Consultar</button>
@@ -228,7 +191,7 @@
                     <i class="bi bi-play-circle-fill" data-audio="audio-05"></i>
                     <p class="typography-text">Instrução</p>
                 </div>
-                <form class="wrapper">
+                <form id="analysis-contests" class="wrapper">
                     <div class="grid g-2">
                         <div class="field">
                             <select id="analysis-contest-select-start"></select>

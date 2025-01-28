@@ -57,6 +57,7 @@
     --field-gap: 5px;
     --field-bg: #fff;
     --field-border: 1px solid #ccc;
+    --field-border-error: 2px solid #8a0a0a;
     --field-border-hover: 1px solid var(--theme);
     --field-padding: 15px;
 

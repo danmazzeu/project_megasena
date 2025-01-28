@@ -1,7 +1,7 @@
 export function feedAllSelect() {
     // Generator
     const generatorSelect = document.getElementById('generator-select');
-    const generatorSelectPremiun = 3;
+    const generatorSelectPremiun = 0;
 
     for (let index = 0; index <= 15; index++) {
         const option = document.createElement('option');
