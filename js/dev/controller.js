@@ -223,15 +223,15 @@ consultContestForm.addEventListener('submit', (event) => {
             contestResultList.innerHTML = '';
 
             const coreInfoList = [
-                { textContent: `Número: ${matchingContest.numero}` },
-                { textContent: `Data Apuração: ${matchingContest.dataApuracao}` },
-                { textContent: `Dezenas Sorteadas: ${matchingContest.listaDezenas.join(' - ')}` },
-                { textContent: `Total de Ganhadores: ${matchingContest.listaMunicipioUFGanhadores.numeroDeGanhadores}` },
-                { textContent: `Rateio de Prêmios: ${matchingContest.listaRateioPremio.join(' - ')}` },
-                { textContent: `Local Sorteio: ${matchingContest.localSorteio}` },
-                { textContent: `Município/UF Sorteio: ${matchingContest.nomeMunicipioUFSorteio}` },
-                { textContent: `Valor Acumulado Próximo Concurso: R$ ${formatToCurrency(matchingContest.valorAcumuladoProximoConcurso)}` },
-                { textContent: `Valor Arrecadado: R$ ${formatToCurrency(matchingContest.valorArrecadado)}` },
+                { textContent: `Número: <span>${matchingContest.numero}</span>` },
+                { textContent: `Data Apuração: <span>${matchingContest.dataApuracao}</span>` },
+                { textContent: `Dezenas Sorteadas: <span>${matchingContest.listaDezenas.join(' - ')}</span>` },
+                { textContent: `Total de Ganhadores: <span>${matchingContest.listaMunicipioUFGanhadores.numeroDeGanhadores}</span>` },
+                { textContent: `Rateio de Prêmios: <span>${matchingContest.listaRateioPremio.join(' - ')}</span>` },
+                { textContent: `Local Sorteio: <span>${matchingContest.localSorteio}</span>` },
+                { textContent: `Município/UF Sorteio: <span>${matchingContest.nomeMunicipioUFSorteio}</span>` },
+                { textContent: `Valor Acumulado Próximo Concurso: <span>R$ ${formatToCurrency(matchingContest.valorAcumuladoProximoConcurso)}</span>` },
+                { textContent: `Valor Arrecadado: <span>R$ ${formatToCurrency(matchingContest.valorArrecadado)}</span>` },
             ];
 
             const rateioList = [];
@@ -246,17 +246,17 @@ consultContestForm.addEventListener('submit', (event) => {
 
             coreInfoList.forEach(item => {
                 const listItem = document.createElement('li');
-                listItem.textContent = item.textContent;
+                listItem.innerHTML = item.innerHTML;
                 mainList.appendChild(listItem);
             });
 
             const rateioTitle = document.createElement('li');
-            rateioTitle.textContent = 'Rateio de Prêmios';
+            rateioTitle.innerHTML = 'Rateio de Prêmios';
             mainList.appendChild(rateioTitle);
 
             rateioList.forEach(item => {
                 const listItem = document.createElement('li');
-                listItem.textContent = item.textContent;
+                listItem.innerHTML = item.innerHTML;
                 mainList.appendChild(listItem);
             });
 

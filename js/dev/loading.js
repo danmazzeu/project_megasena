@@ -77,7 +77,7 @@ async function getAllContestsData() {
         const storedData = localStorage.getItem('megalumni_backup');
         const parsedData = JSON.parse(storedData);
 
-        if (parsedData.length > 0 && lastUpdated === today) {
+        if (parsedData.length > 0 && lastUpdated === today && storedData !== null) {
             const lastStoredContest = parsedData[parsedData.length - 1].numero;
 
             if (lastStoredContest === lastContest) {
