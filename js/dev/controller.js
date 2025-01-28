@@ -182,15 +182,29 @@ consultSequenceForm.addEventListener('submit', (event) => {
 // Consult Contest
 const consultContestForm = document.getElementById('consult-contest');
 const consultContestInput = document.getElementById('consult-contest-input');
+const consultContestError = document.getElementById('consult-contest-error');
 
 consultContestInput.addEventListener('input', () => {
     consultContestInput.classList.remove('errorField');
+    consultContestError.style.display = 'none';
 });
 
 consultContestForm.addEventListener('submit', (event) => {
     event.preventDefault();
-    if (consultContestInput.value.trim() == '') {
+
+    if (consultContestInput.value.trim() === '') {
         consultContestInput.classList.add('errorField');
+        consultContestError.classList.add('fail');
+        consultContestError.classList.remove('success');
+        return;
+    }
+
+    if (consultContestInput.value > currentContest || consultContestInput.value < 1) {
+        consultContestInput.classList.add('errorField');
+        consultContestError.querySelector('p').textContent = "O número do concurso precisa ser entre 1 e " + currentContest + '.';
+        consultContestError.style.display = "flex";
+        consultContestError.classList.add('fail');
+        consultContestError.classList.remove('success');
     } else {
         consultContestInput.classList.remove('errorField');
     }
