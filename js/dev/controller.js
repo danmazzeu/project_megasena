@@ -141,16 +141,28 @@ consultSequenceInput.addEventListener('input', () => {
 
 consultSequenceForm.addEventListener('submit', (event) => {
     event.preventDefault();
+    const inputSequence = consultSequenceInput.value.split(', ').map(Number); 
+
     if (consultSequenceInput.value.trim() == '' || consultSequenceInput.value.length < 22) {
         consultSequenceInput.classList.add('errorField');
+        consultSequenceError.classList.add('fail');
+        consultSequenceError.classList.remove('success');
+        consultSequenceError.querySelector('p').textContent = "É preciso completar a sequência com todos os números.";
+    } else if (inputSequence.some(num => num < 0 || num > 60)) {
+        consultSequenceInput.classList.add('errorField');
+        consultSequenceError.classList.add('fail');
+        consultSequenceError.classList.remove('success');
+        consultSequenceError.querySelector('p').textContent = "Todos os números devem estar entre 0 e 60.";
+    } else if (new Set(inputSequence).size !== inputSequence.length) {
+        consultSequenceInput.classList.add('errorField');
+        consultSequenceError.classList.add('fail');
+        consultSequenceError.classList.remove('success');
+        consultSequenceError.querySelector('p').textContent = "Não é possível ter números iguais em posições diferentes.";
     } else {
-        consultSequenceInput.classList.remove('errorField');
-
-        const inputSequence = consultSequenceInput.value.split(', ').map(Number); 
         const sequenceExists = parsedData.some(item => {
             const itemDezenas = item.listaDezenas.map(dezena => Number(dezena)); 
             return itemDezenas.every(dezena => inputSequence.includes(dezena)) && 
-                   inputSequence.every(dezena => itemDezenas.includes(dezena));
+                    inputSequence.every(dezena => itemDezenas.includes(dezena));
         });
 
         if (sequenceExists) {
@@ -162,9 +174,9 @@ consultSequenceForm.addEventListener('submit', (event) => {
             consultSequenceError.classList.remove('fail');
             consultSequenceError.querySelector('p').textContent = "Sequência não sorteada anteriormente."
         }
-
-        consultSequenceError.style.display = 'flex';
     }
+
+    consultSequenceError.style.display = 'flex';
 });
 
 // Consult Contest
