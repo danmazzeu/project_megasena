@@ -15,6 +15,17 @@ function fadeInOut(status) {
     }
 } fadeInOut(true);
 
+function checkAndUpdateURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const isUpdated = urlParams.get('updated') === 'true';
+  
+    if (!isUpdated) {
+        const newUrl = new URL(window.location.href);
+        newUrl.searchParams.append('updated', 'true');
+        window.location.href = newUrl.toString();
+    }
+}
+
 function setupProgressbar(currentContest, totalContests) {
     const progressbar = document.querySelector(".loading-percent");
     const progressbarDetails = document.querySelector(".loading > span");
@@ -103,6 +114,7 @@ async function getAllContestsData() {
     feedAllSelect();
     feedAllNumber();
     fadeInOut(false);
+    checkAndUpdateURL();
 }
 
 getLastContest()
