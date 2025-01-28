@@ -246,17 +246,17 @@ consultContestForm.addEventListener('submit', (event) => {
 
             coreInfoList.forEach(item => {
                 const listItem = document.createElement('li');
-                listItem.innerHTML = item.innerHTML;
+                listItem.innerHTML = item.textContent;
                 mainList.appendChild(listItem);
             });
 
             const rateioTitle = document.createElement('li');
-            rateioTitle.innerHTML = 'Rateio de Prêmios';
+            rateioTitle.textContent = 'Rateio de Prêmios';
             mainList.appendChild(rateioTitle);
 
             rateioList.forEach(item => {
                 const listItem = document.createElement('li');
-                listItem.innerHTML = item.innerHTML;
+                listItem.innerHTML = item.textContent;
                 mainList.appendChild(listItem);
             });
 

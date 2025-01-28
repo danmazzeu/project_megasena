@@ -98,6 +98,8 @@ async function getAllContestsData() {
         localStorage.removeItem('megalumni_updated');
     }
 
+    fadeInOut(true);
+
     for (let i = 1; i <= lastContest; i++) {
         const contestData = await getContestData(i);
         if (contestData) {
@@ -110,6 +112,7 @@ async function getAllContestsData() {
 
     feedAllSelect();
     feedAllNumber();
+    fadeInOut(false);
 }
 
 getLastContest()
