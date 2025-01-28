@@ -9,22 +9,19 @@ function fadeInOut(status) {
     if (status == true) {
         document.querySelector(".loading").classList.add("loading-show");
         document.body.style.overflow = "hidden";
+        const elementsToHide = document.querySelectorAll('header, main, footer'); 
+            elementsToHide.forEach(element => {
+            element.style.display = 'none';
+        });
     } else {
         document.querySelector(".loading").classList.remove("loading-show");
         document.body.style.overflow = "auto";
+        const elementsToHide = document.querySelectorAll('header, main, footer'); 
+            elementsToHide.forEach(element => {
+            element.style.display = 'flex';
+        });
     }
 } fadeInOut(true);
-
-function checkAndUpdateURL() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const isUpdated = urlParams.get('updated') === 'true';
-  
-    if (!isUpdated) {
-        const newUrl = new URL(window.location.href);
-        newUrl.searchParams.append('updated', 'true');
-        window.location.href = newUrl.toString();
-    }
-}
 
 function setupProgressbar(currentContest, totalContests) {
     const progressbar = document.querySelector(".loading-percent");
@@ -113,8 +110,6 @@ async function getAllContestsData() {
 
     feedAllSelect();
     feedAllNumber();
-    fadeInOut(false);
-    checkAndUpdateURL();
 }
 
 getLastContest()

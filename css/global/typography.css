@@ -16,3 +16,9 @@
     line-height: 18px;
     padding: 0 5px;
 }
+
+.typography-link {
+    color: var(--link);
+    line-height: 18px;
+    text-decoration: underline;
+}
