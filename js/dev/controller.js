@@ -63,7 +63,7 @@ generatorForm.addEventListener("submit", function(event) {
                 card.classList.add('number');
                 card.innerHTML = `
                     <h3>${number ?? 'N/A'}</h3>
-                    <p>POS: ${i+1}</p>
+                    <p>POS: 0${i+1}</p>
                 `;
                 generatorCardsDiv.appendChild(card);
             }
