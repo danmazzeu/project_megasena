@@ -191,7 +191,7 @@ consultContestInput.addEventListener('input', () => {
 
 consultContestForm.addEventListener('submit', (event) => {
     event.preventDefault();
-
+  
     if (consultContestInput.value.trim() === '') {
         consultContestInput.classList.add('errorField');
         consultContestError.classList.add('fail');
@@ -199,6 +199,14 @@ consultContestForm.addEventListener('submit', (event) => {
         return;
     }
 
+    function formatToCurrency(value) {
+        value = parseFloat(value); 
+        if (isNaN(value)) {
+          return "Invalid value"; 
+        }
+        return `R$ ${value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+    }
+  
     if (consultContestInput.value > currentContest || consultContestInput.value < 1) {
         consultContestInput.classList.add('errorField');
         consultContestError.querySelector('p').textContent = "O número do concurso precisa ser entre 1 e " + currentContest + '.';
@@ -207,5 +215,58 @@ consultContestForm.addEventListener('submit', (event) => {
         consultContestError.classList.remove('success');
     } else {
         consultContestInput.classList.remove('errorField');
+        const matchingContest = parsedData.find(item => item.numero === Number(consultContestInput.value));
+    
+        const contestResultList = document.getElementById('const-contest-result');
+
+        if (matchingContest) {
+            contestResultList.innerHTML = '';
+
+            const coreInfoList = [
+                { textContent: `Número: ${matchingContest.numero}` },
+                { textContent: `Data Apuração: ${matchingContest.dataApuracao}` },
+                { textContent: `Dezenas Sorteadas: ${matchingContest.listaDezenas.join(' - ')}` },
+                { textContent: `Total de Ganhadores: ${matchingContest.listaMunicipioUFGanhadores.numeroDeGanhadores}` },
+                { textContent: `Rateio de Prêmios: ${matchingContest.listaRateioPremio.join(' - ')}` },
+                { textContent: `Local Sorteio: ${matchingContest.localSorteio}` },
+                { textContent: `Município/UF Sorteio: ${matchingContest.nomeMunicipioUFSorteio}` },
+                { textContent: `Valor Acumulado Próximo Concurso: R$ ${formatToCurrency(matchingContest.valorAcumuladoProximoConcurso)}` },
+                { textContent: `Valor Arrecadado: R$ ${formatToCurrency(matchingContest.valorArrecadado)}` },
+            ];
+
+            const rateioList = [];
+            for (const rateio of matchingContest.listaRateioPremio) {
+                rateioList.push({
+                    textContent: `${rateio.descricaoFaixa}: ${rateio.numeroDeGanhadores} ganhadores - R$ ${formatToCurrency(rateio.valorPremio)}`,
+                });
+            }
+
+            const mainList = document.createElement('ul');
+            mainList.classList.add('list');
+
+            coreInfoList.forEach(item => {
+                const listItem = document.createElement('li');
+                listItem.textContent = item.textContent;
+                mainList.appendChild(listItem);
+            });
+
+            const rateioTitle = document.createElement('li');
+            rateioTitle.textContent = 'Rateio de Prêmios';
+            mainList.appendChild(rateioTitle);
+
+            rateioList.forEach(item => {
+                const listItem = document.createElement('li');
+                listItem.textContent = item.textContent;
+                mainList.appendChild(listItem);
+            });
+
+            contestResultList.appendChild(mainList);
+        } else {
+            console.error('Concurso não encontrado');
+            consultContestError.querySelector('p').textContent = "Concurso não encontrado.";
+            consultContestError.style.display = "flex";
+            consultContestError.classList.add('fail');
+            consultContestError.classList.remove('success');
+        }
     }
 });

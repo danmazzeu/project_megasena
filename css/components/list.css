@@ -7,9 +7,11 @@
 .list > li {
     color: var(--primary);
     font-weight: 700;
+    text-transform: capitalize;
 }
 
 .list > li > span {
     font-weight: normal;
     margin-left: 5px;
+    text-transform: capitalize;
 }
