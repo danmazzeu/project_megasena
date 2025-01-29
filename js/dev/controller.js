@@ -238,7 +238,7 @@ consultContestForm.addEventListener('submit', (event) => {
                 { textContent: `Dezenas sorteadas: <span>${matchingContest.listaDezenas.join(' - ')}</span>` },
                 { textContent: `Local sorteio: <span>${matchingContest.localSorteio}</span>` },
                 { textContent: `Município/UF sorteio: <span>${matchingContest.nomeMunicipioUFSorteio}</span>` },
-                { textContent: `Valor acumulado próximo concurso: <span>${formatToCurrency(matchingContest.valorEstimadoProximoConcurso)}</span>` },
+                { textContent: `Valor estimado próximo concurso: <span>${formatToCurrency(matchingContest.valorEstimadoProximoConcurso)}</span>` },
                 { textContent: `Valor arrecadado: <span>${formatToCurrency(matchingContest.valorArrecadado)}</span>` },
             ];
 
