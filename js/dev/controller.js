@@ -1,7 +1,6 @@
 const storedData = localStorage.getItem('megalumni_backup');
 const parsedData = JSON.parse(storedData);
 const currentContest = parsedData.length;
-console.log(parsedData)
 
 // Generator
 const generatorForm = document.getElementById('generator');
@@ -30,13 +29,13 @@ generatorForm.addEventListener("submit", function(event) {
                     frequencyMap[number] = (frequencyMap[number] || 0) + 1;
                 }
             });
-          
+
             return Object.entries(frequencyMap)
                 .map(([number, frequency]) => ({ number: parseInt(number), frequency }))
                 .sort((a, b) => b.frequency - a.frequency)
                 .slice(0, numsequence)
                 .map(({ number }) => number);
-          }
+        }
           
         function generateNewCombination(parsedData, numsequence) {
             const newCombination = [];
@@ -402,4 +401,48 @@ analysisContestsForm.addEventListener('submit', (event) => {
     analysisContestsError.style.display = "flex";
     analysisContestsError.classList.add('success');
     analysisContestsError.classList.remove('fail');
+});
+
+// Strong Zones
+document.getElementById('zones-submit').addEventListener('click', (event) => {
+    const zonesResult = document.getElementById('zones-result');
+    zonesResult.style.display = 'flex';
+    const zonesResultList = document.createElement('ul');
+    zonesResultList.classList.add('list');
+    zonesResult.appendChild(zonesResultList);
+
+    function findMostFrequentNumbersX(data, position, numsequence) {
+        const frequencyMap = {};
+        data.forEach(contest => {
+            const number = contest.listaDezenas[position];
+            if (number !== undefined) {
+                frequencyMap[number] = (frequencyMap[number] || 0) + 1;
+            }
+    });
+
+    return Object.entries(frequencyMap)
+        .map(([number, frequency]) => ({ number: parseInt(number), frequency }))
+        .sort((a, b) => b.frequency - a.frequency)
+        .slice(0, numsequence)
+        .map(({ number }) => number);
+    }
+
+    const positions = [0, 1, 2, 3, 4, 5];
+    const numsequence = 10;
+
+    const mostFrequentNumbersPerPosition = positions.map(position => {
+        return {
+            position: position,
+            numbers: findMostFrequentNumbersX(parsedData, position, numsequence)
+        };
+    });
+
+    mostFrequentNumbersPerPosition.forEach(result => {
+        result.numbers.sort((a, b) => a - b);
+        const positionText = `Posição ${result.position + 1}: `;
+        const numbersText = result.numbers.join(', ');
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `${positionText}<span>${numbersText}</span>`;
+        zonesResultList.appendChild(listItem);
+    });
 });
