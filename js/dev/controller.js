@@ -313,97 +313,93 @@ analysisContestsInputEnd.addEventListener('input', () => {
 });
 
 analysisContestsForm.addEventListener('submit', (event) => {
-  event.preventDefault();
+    event.preventDefault();
 
-  if (analysisContestsInputStart.value.trim() === '') {
-      analysisContestsInputStart.classList.add('errorField');
-      analysisContestsError.classList.add('fail');
-      analysisContestsError.classList.remove('success');
-      return;
-  }
+    if (analysisContestsInputStart.value.trim() === '') {
+        analysisContestsInputStart.classList.add('errorField');
+        analysisContestsError.classList.add('fail');
+        analysisContestsError.classList.remove('success');
+        return;
+    }
 
-  if (analysisContestsInputEnd.value.trim() === '') {
-      analysisContestsInputEnd.classList.add('errorField');
-      analysisContestsError.classList.add('fail');
-      analysisContestsError.classList.remove('success');
-      return;
-  }
+    if (analysisContestsInputEnd.value.trim() === '') {
+        analysisContestsInputEnd.classList.add('errorField');
+        analysisContestsError.classList.add('fail');
+        analysisContestsError.classList.remove('success');
+        return;
+    }
 
-  function formatToCurrency(value) {
-      value = parseFloat(value);
-      if (isNaN(value)) {
-        return "Invalid value";
-      }
-      return `R$ ${value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-  }
+    function formatToCurrency(value) {
+        value = parseFloat(value);
+        if (isNaN(value)) {
+            return "Invalid value";
+        }
+        return `R$ ${value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+    }
 
-  const startContestNumber = parseInt(analysisContestsInputStart.value);
-  const endContestNumber = parseInt(analysisContestsInputEnd.value);
+    const startContestNumber = parseInt(analysisContestsInputStart.value);
+    const endContestNumber = parseInt(analysisContestsInputEnd.value);
 
-  // Validate contest number range
-  if (startContestNumber < 1 || endContestNumber < startContestNumber) {
-      analysisContestsInputStart.classList.add('errorField');
-      analysisContestsError.querySelector('p').textContent = "O número inicial do concurso deve ser maior ou igual a 1 e menor ou igual ao número final.";
-      analysisContestsError.style.display = "flex";
-      analysisContestsError.classList.add('fail');
-      analysisContestsError.classList.remove('success');
-      return;
-  }
+    if (startContestNumber < 1 || endContestNumber < startContestNumber) {
+        analysisContestsInputStart.classList.add('errorField');
+        analysisContestsError.querySelector('p').textContent = "O número inicial do concurso deve ser maior ou igual a 1 e menor ou igual ao número final.";
+        analysisContestsError.style.display = "flex";
+        analysisContestsError.classList.add('fail');
+        analysisContestsError.classList.remove('success');
+        return;
+    }
 
-  // Filter contests by number range
-  const filteredContests = parsedData.filter(contest => {
-      const contestNumber = parseInt(contest.numero);
-      return contestNumber >= startContestNumber && contestNumber <= endContestNumber;
-  });
+    const filteredContests = parsedData.filter(contest => {
+        const contestNumber = parseInt(contest.numero);
+        return contestNumber >= startContestNumber && contestNumber <= endContestNumber;
+    });
 
-  if (filteredContests.length === 0) {
-      analysisContestsError.querySelector('p').textContent = "Nenhum concurso encontrado para o intervalo informado.";
-      analysisContestsError.style.display = "flex";
-      analysisContestsError.classList.add('fail');
-      analysisContestsError.classList.remove('success');
-      analysisContestsResultList.style.display = 'none';
-      return;
-  }
+    if (filteredContests.length === 0) {
+        analysisContestsError.querySelector('p').textContent = "Nenhum concurso encontrado para o intervalo informado.";
+        analysisContestsError.style.display = "flex";
+        analysisContestsError.classList.add('fail');
+        analysisContestsError.classList.remove('success');
+        analysisContestsResultList.style.display = 'none';
+        return;
+    }
 
-  // Calculate total accumulated values and winner counts for each prize tier
-  let totalArrecadado = 0;
-  let totalRateio = 0;
-  const winnerCounts = { '6': 0, '5': 0, '4': 0 }; // Initialize winner counts for 6, 5, and 4 hits
+    let totalArrecadado = 0;
+    let totalRateio = 0;
+    const winnerCounts = { '6': 0, '5': 0, '4': 0 };
 
-  for (const contest of filteredContests) {
-      totalArrecadado += parseFloat(contest.valorArrecadado);
-      for (const rateio of contest.listaRateioPremio) {
-          const prizeTier = rateio.descricaoFaixa.slice(0, 1); // Extract prize tier (e.g., "6", "5", "4")
-          winnerCounts[prizeTier] += parseInt(rateio.numeroDeGanhadores);
-          totalRateio += parseFloat(rateio.valorPremio) * parseInt(rateio.numeroDeGanhadores);
-      }
-  }
+    for (const contest of filteredContests) {
+        totalArrecadado += parseFloat(contest.valorArrecadado);
+        for (const rateio of contest.listaRateioPremio) {
+            const prizeTier = rateio.descricaoFaixa.slice(0, 1);
+            winnerCounts[prizeTier] += parseInt(rateio.numeroDeGanhadores);
+            totalRateio += parseFloat(rateio.valorPremio) * parseInt(rateio.numeroDeGanhadores);
+        }
+    }
 
-  analysisContestsResultList.innerHTML = '';
+    analysisContestsResultList.innerHTML = '';
 
-  const coreInfoList = [
-      { textContent: `Total de concursos analisados: <span>${filteredContests.length}</span>` },
-      { textContent: `Total de concursos analisados: <span>${filteredContests.length}</span>` },
-      { textContent: `Valor total arrecadado: <span>${formatToCurrency(totalArrecadado)}</span>` },
-      { textContent: `Total de prêmios distribuídos: <span>${formatToCurrency(totalRateio)}</span>` }, // Corrected line
-      { textContent: `Total de ganhadores (6 acertos): <span>${winnerCounts['6']}</span>` },
-      { textContent: `Total de ganhadores (5 acertos): <span>${winnerCounts['5']}</span>` },
-      { textContent: `Total de ganhadores (4 acertos): <span>${winnerCounts['4']}</span>` },
-  ];
+    const coreInfoList = [
+        { textContent: `Total de concursos analisados: <span>${filteredContests.length}</span>` },
+        { textContent: `Valor total arrecadado: <span>${formatToCurrency(totalArrecadado)}</span>` },
+        { textContent: `Total de prêmios distribuídos: <span>${formatToCurrency(totalRateio)}</span>` },
+        { textContent: `Total de ganhadores (6 acertos): <span>${winnerCounts['6']}</span>` },
+        { textContent: `Total de ganhadores (5 acertos): <span>${winnerCounts['5']}</span>` },
+        { textContent: `Total de ganhadores (4 acertos): <span>${winnerCounts['4']}</span>` },
+    ];
 
-  const mainList = document.createElement('ul');
-  mainList.classList.add('list');
+    const mainList = document.createElement('ul');
+    mainList.classList.add('list');
 
-  coreInfoList.forEach(item => {
-      const listItem = document.createElement('li');
-      listItem.innerHTML = item.textContent;
-      mainList.appendChild(listItem);
-  });
+    coreInfoList.forEach(item => {
+        const listItem = document.createElement('li');
+        listItem.innerHTML = item.textContent;
+        mainList.appendChild(listItem);
+    });
 
-  analysisContestsResultList.appendChild(mainList);
-  analysisContestsResultList.style.display = 'flex'; 
-  analysisContestsError.querySelector('p').textContent = "Análise de concursos realizada com sucesso.";
-  analysisContestsError.style.display = "flex";
-  analysisContestsError.classList.add('success');
-  analysisContestsError.classList.remove('fail');
+    analysisContestsResultList.appendChild(mainList);
+    analysisContestsResultList.style.display = 'flex'; 
+    analysisContestsError.querySelector('p').textContent = "Análise de concursos realizada com sucesso.";
+    analysisContestsError.style.display = "flex";
+    analysisContestsError.classList.add('success');
+    analysisContestsError.classList.remove('fail');
 });
