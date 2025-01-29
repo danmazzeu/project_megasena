@@ -96,7 +96,6 @@ async function getAllContestsData() {
         fadeInOut(true);
         localStorage.removeItem('megalumni_backup');
         localStorage.removeItem('megalumni_updated');
-        return;
     }
 
     fadeInOut(true);
@@ -107,7 +106,7 @@ async function getAllContestsData() {
             allContestsData.push(contestData);
         } else {
             fadeInOut(true);
-            return;
+            window.location.href = '.';
         }
     }
 
@@ -121,7 +120,4 @@ async function getAllContestsData() {
 
 getLastContest()
     .then(() => getAllContestsData())
-    .catch(error => {
-        console.error('Error:', error);
-        fadeInOut(true); 
-    });
+    .catch(error => console.error('Error:', error));
