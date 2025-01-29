@@ -75,3 +75,5 @@ textarea:disabled {
     background-color: #f0f0f0 !important;
     cursor: default !important;
 }
+
+.hidden { display: none; }

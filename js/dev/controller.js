@@ -183,10 +183,12 @@ consultSequenceForm.addEventListener('submit', (event) => {
 const consultContestForm = document.getElementById('consult-contest');
 const consultContestInput = document.getElementById('consult-contest-input');
 const consultContestError = document.getElementById('consult-contest-error');
+const contestResultList = document.getElementById('const-contest-result');
 
 consultContestInput.addEventListener('input', () => {
     consultContestInput.classList.remove('errorField');
     consultContestError.style.display = 'none';
+    contestResultList.style.display = 'none';
 });
 
 consultContestForm.addEventListener('submit', (event) => {
@@ -216,26 +218,30 @@ consultContestForm.addEventListener('submit', (event) => {
     } else {
         consultContestInput.classList.remove('errorField');
         const matchingContest = parsedData.find(item => item.numero === Number(consultContestInput.value));
-    
-        const contestResultList = document.getElementById('const-contest-result');
 
         if (matchingContest) {
             contestResultList.innerHTML = '';
 
             const coreInfoList = [
-                { textContent: `Número: <span>${matchingContest.numero}</span>` },
-                { textContent: `Data Apuração: <span>${matchingContest.dataApuracao}</span>` },
-                { textContent: `Dezenas Sorteadas: <span>${matchingContest.listaDezenas.join(' - ')}</span>` },
-                { textContent: `Local Sorteio: <span>${matchingContest.localSorteio}</span>` },
-                { textContent: `Município/UF Sorteio: <span>${matchingContest.nomeMunicipioUFSorteio}</span>` },
-                { textContent: `Valor Acumulado Próximo Concurso: <span>R$ ${formatToCurrency(matchingContest.valorAcumuladoProximoConcurso)}</span>` },
-                { textContent: `Valor Arrecadado: <span>R$ ${formatToCurrency(matchingContest.valorArrecadado)}</span>` },
+                { textContent: `Concurso: <span>${matchingContest.numero}</span>` },
+                { textContent: `Data apuração: <span>${matchingContest.dataApuracao}</span>` },
+                { textContent: `Dezenas sorteadas: <span>${matchingContest.listaDezenas.join(' - ')}</span>` },
+                { textContent: `Local sorteio: <span>${matchingContest.localSorteio}</span>` },
+                { textContent: `Município/UF sorteio: <span>${matchingContest.nomeMunicipioUFSorteio}</span>` },
+                { textContent: `Valor arrecadado: <span>${formatToCurrency(matchingContest.valorArrecadado)}</span>` },
             ];
+
+            const ufList = [];
+            for (const uf of matchingContest.listaMunicipioUFGanhadores) {
+                ufList.push({
+                    textContent: `Locais ganhadores: <span>${uf.municipio} - ${uf.uf}</span>`,
+                });
+            }
 
             const rateioList = [];
             for (const rateio of matchingContest.listaRateioPremio) {
                 rateioList.push({
-                    textContent: `${rateio.descricaoFaixa}: <span>${rateio.numeroDeGanhadores} ganhadores - R$ ${formatToCurrency(rateio.valorPremio)} / cada<span>`,
+                    textContent: `${rateio.descricaoFaixa}: <span>${rateio.numeroDeGanhadores} ganhadores - ${formatToCurrency(rateio.valorPremio)} / cada<span>`,
                 });
             }
 
@@ -248,6 +254,12 @@ consultContestForm.addEventListener('submit', (event) => {
                 mainList.appendChild(listItem);
             });
 
+            ufList.forEach(item => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = item.textContent;
+                mainList.appendChild(listItem);
+            });
+
             rateioList.forEach(item => {
                 const listItem = document.createElement('li');
                 listItem.innerHTML = item.textContent;
@@ -255,12 +267,17 @@ consultContestForm.addEventListener('submit', (event) => {
             });
 
             contestResultList.appendChild(mainList);
+            contestResultList.style.display = 'flex';
+            consultContestError.querySelector('p').textContent = "Concurso encontrado com sucesso.";
+            consultContestError.style.display = "flex";
+            consultContestError.classList.add('success');
+            consultContestError.classList.remove('fail');
         } else {
-            console.error('Concurso não encontrado');
             consultContestError.querySelector('p').textContent = "Concurso não encontrado.";
             consultContestError.style.display = "flex";
             consultContestError.classList.add('fail');
             consultContestError.classList.remove('success');
+            contestResultList.style.display = 'none';
         }
     }
 });
