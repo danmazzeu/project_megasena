@@ -406,6 +406,7 @@ analysisContestsForm.addEventListener('submit', (event) => {
 // Strong Zones
 document.getElementById('zones-submit').addEventListener('click', (event) => {
     const zonesResult = document.getElementById('zones-result');
+    zonesResult.textContent = '';
     zonesResult.style.display = 'flex';
     const zonesResultList = document.createElement('ul');
     zonesResultList.classList.add('list');
