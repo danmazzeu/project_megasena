@@ -411,21 +411,21 @@ document.getElementById('zones-submit').addEventListener('click', (event) => {
     zonesResultList.classList.add('list');
     zonesResult.appendChild(zonesResultList);
 
-    function findMostFrequentNumbersX(data, position, numsequence) {
+    function findZones(data, position, numsequence) {
         const frequencyMap = {};
         data.forEach(contest => {
             const number = contest.listaDezenas[position];
             if (number !== undefined) {
-                frequencyMap[number] = (frequencyMap[number] || 0) + 1;
+                frequencyMap[number.toString().padStart(2, '0')] = (frequencyMap[number.toString().padStart(2, '0')] || 0) + 1;
             }
-    });
-
-    return Object.entries(frequencyMap)
-        .map(([number, frequency]) => ({ number: parseInt(number), frequency }))
-        .sort((a, b) => b.frequency - a.frequency)
-        .slice(0, numsequence)
-        .map(({ number }) => number);
-    }
+        });
+            
+        return Object.entries(frequencyMap)
+            .map(([number, frequency]) => ({ number: parseInt(number), frequency }))
+            .sort((a, b) => b.frequency - a.frequency)
+            .slice(0, numsequence)
+            .map(({ number }) => number);
+      }
 
     const positions = [0, 1, 2, 3, 4, 5];
     const numsequence = 10;
@@ -433,14 +433,14 @@ document.getElementById('zones-submit').addEventListener('click', (event) => {
     const mostFrequentNumbersPerPosition = positions.map(position => {
         return {
             position: position,
-            numbers: findMostFrequentNumbersX(parsedData, position, numsequence)
+            numbers: findZones(parsedData, position, numsequence)
         };
     });
 
     mostFrequentNumbersPerPosition.forEach(result => {
         result.numbers.sort((a, b) => a - b);
         const positionText = `Posição ${result.position + 1}: `;
-        const numbersText = result.numbers.join(', ');
+        const numbersText = result.numbers.map(number => number < 10 ? `0${number}` : number).join(', '); 
         const listItem = document.createElement('li');
         listItem.innerHTML = `${positionText}<span>${numbersText}</span>`;
         zonesResultList.appendChild(listItem);
