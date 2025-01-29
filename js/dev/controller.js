@@ -38,13 +38,23 @@ generatorForm.addEventListener("submit", function(event) {
                 .map(({ number }) => number);
           }
           
-          function generateNewCombination(parsedData, numsequence) {
+        function generateNewCombination(parsedData, numsequence) {
             const newCombination = [];
+            const usedNumbers = new Set();
+          
             for (let i = 0; i < parsedData[0].listaDezenas.length; i++) {
-                const mostFrequent = findMostFrequentNumbers(parsedData, i, numsequence);
+                let mostFrequent = findMostFrequentNumbers(parsedData, i, numsequence);
+            
+                if (i > 0 && mostFrequent.length > 0) {
+                    const prevNumber = parseInt(newCombination[i - 1]);
+                    mostFrequent = mostFrequent.filter(num => parseInt(num) >= prevNumber && !usedNumbers.has(num));
+                }
+            
                 if (mostFrequent.length > 0) {
                     const randomIndex = Math.floor(Math.random() * mostFrequent.length);
-                    newCombination.push(mostFrequent[randomIndex].toString().padStart(2, '0'));
+                    const selectedNumber = mostFrequent[randomIndex];
+                    newCombination.push(selectedNumber.toString().padStart(2, '0'));
+                    usedNumbers.add(selectedNumber);
                 } else {
                     newCombination.push(null);
                 }
@@ -183,12 +193,12 @@ consultSequenceForm.addEventListener('submit', (event) => {
 const consultContestForm = document.getElementById('consult-contest');
 const consultContestInput = document.getElementById('consult-contest-input');
 const consultContestError = document.getElementById('consult-contest-error');
-const contestResultList = document.getElementById('const-contest-result');
+const consultResultList = document.getElementById('consult-result');
 
 consultContestInput.addEventListener('input', () => {
     consultContestInput.classList.remove('errorField');
     consultContestError.style.display = 'none';
-    contestResultList.style.display = 'none';
+    consultResultList.style.display = 'none';
 });
 
 consultContestForm.addEventListener('submit', (event) => {
@@ -220,7 +230,7 @@ consultContestForm.addEventListener('submit', (event) => {
         const matchingContest = parsedData.find(item => item.numero === Number(consultContestInput.value));
 
         if (matchingContest) {
-            contestResultList.innerHTML = '';
+            consultResultList.innerHTML = '';
 
             const coreInfoList = [
                 { textContent: `Concurso: <span>${matchingContest.numero}</span>` },
@@ -228,6 +238,7 @@ consultContestForm.addEventListener('submit', (event) => {
                 { textContent: `Dezenas sorteadas: <span>${matchingContest.listaDezenas.join(' - ')}</span>` },
                 { textContent: `Local sorteio: <span>${matchingContest.localSorteio}</span>` },
                 { textContent: `Município/UF sorteio: <span>${matchingContest.nomeMunicipioUFSorteio}</span>` },
+                { textContent: `Valor acumulado próximo concurso: <span>${formatToCurrency(matchingContest.valorEstimadoProximoConcurso)}</span>` },
                 { textContent: `Valor arrecadado: <span>${formatToCurrency(matchingContest.valorArrecadado)}</span>` },
             ];
 
@@ -266,8 +277,8 @@ consultContestForm.addEventListener('submit', (event) => {
                 mainList.appendChild(listItem);
             });
 
-            contestResultList.appendChild(mainList);
-            contestResultList.style.display = 'flex';
+            consultResultList.appendChild(mainList);
+            consultResultList.style.display = 'flex';
             consultContestError.querySelector('p').textContent = "Concurso encontrado com sucesso.";
             consultContestError.style.display = "flex";
             consultContestError.classList.add('success');
@@ -277,7 +288,122 @@ consultContestForm.addEventListener('submit', (event) => {
             consultContestError.style.display = "flex";
             consultContestError.classList.add('fail');
             consultContestError.classList.remove('success');
-            contestResultList.style.display = 'none';
+            consultResultList.style.display = 'none';
         }
     }
+});
+
+// Analysis Contests
+const analysisContestsForm = document.getElementById('analysis-contests');
+const analysisContestsInputStart = document.getElementById('analysis-contest-select-start');
+const analysisContestsInputEnd = document.getElementById('analysis-contest-select-end');
+const analysisContestsError = document.getElementById('analysis-contest-error');
+const analysisContestsResultList = document.getElementById('analysis-contest-result');
+
+analysisContestsInputStart.addEventListener('input', () => {
+    analysisContestsInputStart.classList.remove('errorField');
+    analysisContestsError.style.display = 'none';
+    analysisContestsResultList.style.display = 'none';
+});
+
+analysisContestsInputEnd.addEventListener('input', () => {
+    analysisContestsInputEnd.classList.remove('errorField');
+    analysisContestsError.style.display = 'none';
+    analysisContestsResultList.style.display = 'none';
+});
+
+analysisContestsForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  if (analysisContestsInputStart.value.trim() === '') {
+      analysisContestsInputStart.classList.add('errorField');
+      analysisContestsError.classList.add('fail');
+      analysisContestsError.classList.remove('success');
+      return;
+  }
+
+  if (analysisContestsInputEnd.value.trim() === '') {
+      analysisContestsInputEnd.classList.add('errorField');
+      analysisContestsError.classList.add('fail');
+      analysisContestsError.classList.remove('success');
+      return;
+  }
+
+  function formatToCurrency(value) {
+      value = parseFloat(value);
+      if (isNaN(value)) {
+        return "Invalid value";
+      }
+      return `R$ ${value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+  }
+
+  const startContestNumber = parseInt(analysisContestsInputStart.value);
+  const endContestNumber = parseInt(analysisContestsInputEnd.value);
+
+  // Validate contest number range
+  if (startContestNumber < 1 || endContestNumber < startContestNumber) {
+      analysisContestsInputStart.classList.add('errorField');
+      analysisContestsError.querySelector('p').textContent = "O número inicial do concurso deve ser maior ou igual a 1 e menor ou igual ao número final.";
+      analysisContestsError.style.display = "flex";
+      analysisContestsError.classList.add('fail');
+      analysisContestsError.classList.remove('success');
+      return;
+  }
+
+  // Filter contests by number range
+  const filteredContests = parsedData.filter(contest => {
+      const contestNumber = parseInt(contest.numero);
+      return contestNumber >= startContestNumber && contestNumber <= endContestNumber;
+  });
+
+  if (filteredContests.length === 0) {
+      analysisContestsError.querySelector('p').textContent = "Nenhum concurso encontrado para o intervalo informado.";
+      analysisContestsError.style.display = "flex";
+      analysisContestsError.classList.add('fail');
+      analysisContestsError.classList.remove('success');
+      analysisContestsResultList.style.display = 'none';
+      return;
+  }
+
+  // Calculate total accumulated values and winner counts for each prize tier
+  let totalArrecadado = 0;
+  let totalRateio = 0;
+  const winnerCounts = { '6': 0, '5': 0, '4': 0 }; // Initialize winner counts for 6, 5, and 4 hits
+
+  for (const contest of filteredContests) {
+      totalArrecadado += parseFloat(contest.valorArrecadado);
+      for (const rateio of contest.listaRateioPremio) {
+          const prizeTier = rateio.descricaoFaixa.slice(0, 1); // Extract prize tier (e.g., "6", "5", "4")
+          winnerCounts[prizeTier] += parseInt(rateio.numeroDeGanhadores);
+          totalRateio += parseFloat(rateio.valorPremio) * parseInt(rateio.numeroDeGanhadores);
+      }
+  }
+
+  analysisContestsResultList.innerHTML = '';
+
+  const coreInfoList = [
+      { textContent: `Total de concursos analisados: <span>${filteredContests.length}</span>` },
+      { textContent: `Total de concursos analisados: <span>${filteredContests.length}</span>` },
+      { textContent: `Valor total arrecadado: <span>${formatToCurrency(totalArrecadado)}</span>` },
+      { textContent: `Total de prêmios distribuídos: <span>${formatToCurrency(totalRateio)}</span>` }, // Corrected line
+      { textContent: `Total de ganhadores (6 acertos): <span>${winnerCounts['6']}</span>` },
+      { textContent: `Total de ganhadores (5 acertos): <span>${winnerCounts['5']}</span>` },
+      { textContent: `Total de ganhadores (4 acertos): <span>${winnerCounts['4']}</span>` },
+  ];
+
+  const mainList = document.createElement('ul');
+  mainList.classList.add('list');
+
+  coreInfoList.forEach(item => {
+      const listItem = document.createElement('li');
+      listItem.innerHTML = item.textContent;
+      mainList.appendChild(listItem);
+  });
+
+  analysisContestsResultList.appendChild(mainList);
+  analysisContestsResultList.style.display = 'flex'; 
+  analysisContestsError.querySelector('p').textContent = "Análise de concursos realizada com sucesso.";
+  analysisContestsError.style.display = "flex";
+  analysisContestsError.classList.add('success');
+  analysisContestsError.classList.remove('fail');
 });

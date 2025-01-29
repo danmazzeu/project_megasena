@@ -48,15 +48,15 @@ async function getContestData(contestNumber) {
         const data = await response.json();
 
         const relevantData = {
-        numero: data.numero,
-        dataApuracao: data.dataApuracao,
-        listaDezenas: data.listaDezenas,
-        listaRateioPremio: data.listaRateioPremio,
-        listaMunicipioUFGanhadores: data.listaMunicipioUFGanhadores,
-        localSorteio: data.localSorteio,
-        nomeMunicipioUFSorteio: data.nomeMunicipioUFSorteio,
-        valorAcumuladoProximoConcurso: data.valorAcumuladoProximoConcurso,
-        valorArrecadado: data.valorArrecadado
+            numero: data.numero,
+            dataApuracao: data.dataApuracao,
+            listaDezenas: data.listaDezenas,
+            listaRateioPremio: data.listaRateioPremio,
+            listaMunicipioUFGanhadores: data.listaMunicipioUFGanhadores,
+            localSorteio: data.localSorteio,
+            nomeMunicipioUFSorteio: data.nomeMunicipioUFSorteio,
+            valorEstimadoProximoConcurso: data.valorEstimadoProximoConcurso,
+            valorArrecadado: data.valorArrecadado
         };
 
         setupProgressbar(data.numero, lastContest);
