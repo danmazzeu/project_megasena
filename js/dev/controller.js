@@ -226,8 +226,6 @@ consultContestForm.addEventListener('submit', (event) => {
                 { textContent: `Número: <span>${matchingContest.numero}</span>` },
                 { textContent: `Data Apuração: <span>${matchingContest.dataApuracao}</span>` },
                 { textContent: `Dezenas Sorteadas: <span>${matchingContest.listaDezenas.join(' - ')}</span>` },
-                { textContent: `Total de Ganhadores: <span>${matchingContest.listaMunicipioUFGanhadores.numeroDeGanhadores}</span>` },
-                { textContent: `Rateio de Prêmios: <span>${matchingContest.listaRateioPremio.join(' - ')}</span>` },
                 { textContent: `Local Sorteio: <span>${matchingContest.localSorteio}</span>` },
                 { textContent: `Município/UF Sorteio: <span>${matchingContest.nomeMunicipioUFSorteio}</span>` },
                 { textContent: `Valor Acumulado Próximo Concurso: <span>R$ ${formatToCurrency(matchingContest.valorAcumuladoProximoConcurso)}</span>` },
@@ -237,7 +235,7 @@ consultContestForm.addEventListener('submit', (event) => {
             const rateioList = [];
             for (const rateio of matchingContest.listaRateioPremio) {
                 rateioList.push({
-                    textContent: `${rateio.descricaoFaixa}: ${rateio.numeroDeGanhadores} ganhadores - R$ ${formatToCurrency(rateio.valorPremio)}`,
+                    textContent: `${rateio.descricaoFaixa}: <span>${rateio.numeroDeGanhadores} ganhadores - R$ ${formatToCurrency(rateio.valorPremio)} / cada<span>`,
                 });
             }
 
@@ -249,10 +247,6 @@ consultContestForm.addEventListener('submit', (event) => {
                 listItem.innerHTML = item.textContent;
                 mainList.appendChild(listItem);
             });
-
-            const rateioTitle = document.createElement('li');
-            rateioTitle.textContent = 'Rateio de Prêmios';
-            mainList.appendChild(rateioTitle);
 
             rateioList.forEach(item => {
                 const listItem = document.createElement('li');
