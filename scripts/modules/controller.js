@@ -133,7 +133,7 @@ async function useMegaSenaData() {
                     if (item.average == 1) {
                         listItem.innerHTML = `<b>${key}:</b> Todos os concursos.<br><b>Vencedores:</b> ${item.winners}`;
                     } else {
-                        listItem.innerHTML = `<b>${key}:</b> Média de ${item.average} concurso(s).<br><b>Vencedores:</b> ${item.winners}`;
+                        listItem.innerHTML = `<b>${key}:</b> Intervalo médio de ${item.average} concurso(s).<br><b>Vencedores:</b> ${item.winners}`;
                     }
                     winnersIntervalList.appendChild(listItem);
                 } else {
