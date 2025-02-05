@@ -1,11 +1,15 @@
 .list {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 5px;
+    flex-wrap: wrap;
+    align-items: center;
 }
 
 .list > li {
-    line-height: 16px;
+    flex: 1;
+    flex-basis: auto;
+    line-height: 18px;
     padding: 10px;
     border-radius: 10px;
     border: 1px dashed #ccc;
