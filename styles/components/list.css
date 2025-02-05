@@ -3,7 +3,6 @@
     flex-direction: row;
     gap: 5px;
     flex-wrap: wrap;
-    align-items: center;
 }
 
 .list > li {
@@ -18,4 +17,15 @@
 
 .list > li > b {
     margin-right: 5px;
+}
+
+@media all and (max-width: 500px) {
+    .list { 
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
+    .list > li {
+        flex: inherit;
+        flex-basis: inherit;
+    }
 }
