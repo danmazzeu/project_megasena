@@ -26,224 +26,287 @@
         <title>MEGALUMNI</title>
 
         <!-- Global Styles -->
-        <link rel="stylesheet" href="css/global/global.css">
+        <link rel="stylesheet" href="styles/global/global.css">
+        <link rel="stylesheet" href="styles/global/animations.css">
+        <link rel="stylesheet" href="styles/global/typography.css">
+        <link rel="stylesheet" href="styles/global/grid.css">
+        <link rel="stylesheet" href="styles/global/protected.css">
+
+        <!-- Components Styles -->
+        <link rel="stylesheet" href="styles/components/loading.css">
+        <link rel="stylesheet" href="styles/components/container.css">
+        <link rel="stylesheet" href="styles/components/card.css">
+        <link rel="stylesheet" href="styles/components/number.css">
+        <link rel="stylesheet" href="styles/components/field.css">
+        <link rel="stylesheet" href="styles/components/list.css">
+        <link rel="stylesheet" href="styles/components/button.css">
+        <link rel="stylesheet" href="styles/components/error.css">
+        <link rel="stylesheet" href="styles/components/player.css">
+        <link rel="stylesheet" href="styles/components/wrapper.css">
 
         <!-- Global Scripts -->
-        <script defer src="js/global/jquery.js"></script>
-        <script defer src="js/global/jquery_mask.js"></script>
-        <script defer src="js/global/protect.js"></script>
+        <script defer src="scripts/global/jquery.js"></script>
+        <script defer src="scripts/global/jquery_mask.js"></script>
+        <script defer src="scripts/global/protected.js"></script>
 
-        <!-- Dev Modules-->
-        <script defer src="js/dev/select.js" type="module"></script>
-        <script defer src="js/dev/number.js" type="module"></script>
-        <script defer src="js/dev/loading.js" type="module"></script>
+        <!-- Components Scripts -->
+        <script defer src="scripts/dev/player.js"></script>
 
-        <!-- Dev Scripts -->
-        <script defer src="js/dev/player.js"></script>
-        <script defer src="js/dev/controller.js"></script>
+        <!-- Modules -->
+        <script defer src="scripts/modules/loading.js" type="module"></script>
+        <script defer src="scripts/modules/api.js" type="module"></script>
+        <script defer src="scripts/modules/repository.js" type="module"></script>
+        <script defer src="scripts/modules/controller.js" type="module"></script>
     </head>
-    <body>
+    <body class="protected">
 
         <!-- Loading -->
-        <div class="loading protected">
-            <h1 class="loading-logo">M</h1>
-            <div class="loading-progressbar">
-                <div class="loading-percent"></div>
-            </div>
-            <span class="typography-text">0%</span>
-            <a href="." class="typography-link">Atualizar</a>
-            <div class="player">
-                <i class="bi bi-play-circle-fill" data-audio="audio-00"></i>
-                <p class="typography-text">Instrução</p>
-            </div>
-            <p class="typography-text">Para garantir que você sempre tenha os dados mais recentes e precisos, nosso sistema realiza uma atualização completa pelo menos uma vez por dia. Durante esse processo, que pode variar em tempo dependendo da sua conexão com a internet, recomendamos que você minimize o navegador. Isso não afeta a atualização e permite que você continue utilizando outras aplicações.</p>
-            <p class="typography-description">Elaborado e desenvolvido por Daniel Mazzeu<br>Todos os direitos reservados 2025.</p>
+        <div id="loading">
+            <i class="bi bi-arrow-counterclockwise"></i>
+            <h1></h1>
+            <p></p>
         </div>
-
-        <!-- Header -->
-        <header class="protected">
-            <video muted loop autoplay>
-                <source src="videos/video-01.mp4" />
-            </video>
-            <div>
-                <h1>Megalumni</h1>
-                <p>"Deixamos você mais próximo da <span>vitória</span>."</p>
-            </div>
-        </header>
-
+        
         <!-- Main -->
-        <main class="protected">
-            <!-- Sequences Generator -->
-            <section>
-                <h2 class="typography-title">Gerador de sequência</h2>
-                <div class="wrapper">
-                    <p class="typography-paragraph">Nossa plataforma utiliza inteligência artificial para analisar todos os sorteios, desde o primeiro concurso até o atual, e gerar combinações personalizadas, baseadas em dados reais e estatísticas robustas. Empregando cálculos complexos, reduzimos o número de possibilidades e aumentamos significativamente suas chances. Nossa plataforma não garante vitória, mas o aproxima consideravelmente dela.</p>
-                </div>
-                <div class="player">
-                    <i class="bi bi-play-circle-fill" data-audio="audio-01"></i>
-                    <p class="typography-text">Instrução</p>
-                </div>
-                <form id="generator" class="wrapper">
-                    <div class="field">
-                        <select id="generator-select"></select>
-                        <p class="typography-description">Ao selecionar a frequência você está dizendo ao sistema que você deseja essa quantidade de números mais frequêntes em cada posição. Por exemplo a frequência de 3 números, serão as combinações utilizando os 3 números mais recorrentes de cada posição.</p>
+        <main class="container">
+            <!-- Last Contest -->
+            <section class="card">
+                <div class="grid g-1">
+                    <h1>Último concurso</h1>
+                    <div class="wrapper">
+                        <p>Mantenha-se atualizado com os resultados da Mega Sena! Aqui você encontra os números sorteados no último concurso, além de informações detalhadas sobre os ganhadores e as premiações. Caso queira informações de algum concurso específico, vá até o formulário de consulta de concurso.</p>
                     </div>
-                    <button type="submit">Gerar</button>
-                </form>
-                <div id="generator-error" class="error success">
-                    <i class="bi bi-check-circle-fill"></i>
-                    <p class="typography-paragraph">Error</p>
                 </div>
-                <div id="generator-cards" class="grid g-6"></div>
+                <div class="grid g-1">
+                    <div class="player">
+                        <i class="bi bi-play-circle-fill" data-audio="audio-00"></i>
+                        <p>Instrução</p>
+                    </div>
+                </div>
+                <div id="last-numbers" class="grid g-6"></div>
+                <div class="grid g-1">
+                    <ul id="last-info" class="list">
+                        <li><b>Concurso:</b>teste</li>
+                        <li><b>Ganhadores 4 números:</b>teste</li>
+                        <li><b>Ganhadores 5 números:</b>teste</li>
+                        <li><b>Ganhadores 6 números:</b>teste</li>
+                        <li><b>Premiação 4 números:</b>teste</li>
+                        <li><b>Premiação 5 números:</b>teste</li>
+                        <li><b>Premiação 6 números:</b>teste</li>
+                        <li><b>Locais Ganhadores:</b>teste</li>
+                        <li><b>Valor arrecadado pŕoximo concurso:</b>teste</li>
+                    </ul>
+                </div>
             </section>
-
-            <!-- Analysis Numbers & Positions -->
-            <section>
-                <h2 class="typography-title">Análise de números & Posições</h2>
+            <!-- Last Contest -->
+            <section class="card">
+                <div class="grid g-1">
+                    <h1>Gerador de sequências</h1>
+                    <div class="wrapper">
+                        <p>Nossa plataforma utiliza inteligência artificial para analisar todos os sorteios, desde o primeiro concurso até o atual, e gerar combinações personalizadas, baseadas em dados reais e estatísticas robustas. Empregando cálculos complexos, reduzimos o número de possibilidades e aumentamos significativamente suas chances. Nossa plataforma não garante vitória, mas o aproxima consideravelmente dela.</p>
+                    </div>
+                </div>
+                <div class="grid g-1">
+                    <div class="player">
+                        <i class="bi bi-play-circle-fill" data-audio="audio-01"></i>
+                        <p>Instrução</p>
+                    </div>
+                </div>
+                <div class="grid g-6">
+                    <div class="number">
+                        <h2>02</h2>
+                        <p>Posição: 1</p>
+                    </div>
+                    <div class="number">
+                        <h2>02</h2>
+                        <p>Posição: 2</p>
+                    </div>
+                    <div class="number">
+                        <h2>02</h2>
+                        <p>Posição: 3</p>
+                    </div>
+                    <div class="number">
+                        <h2>02</h2>
+                        <p>Posição: 4</p>
+                    </div>
+                    <div class="number">
+                        <h2>02</h2>
+                        <p>Posição: 5</p>
+                    </div>
+                    <div class="number">
+                        <h2>02</h2>
+                        <p>Posição: 6</p>
+                    </div>
+                </div>
                 <div class="wrapper">
-                    <p class="typography-paragraph">Explore os dados de todos os concursos e crie análises personalizadas em tempo real. Nosso sistema permite que você compare resultados, identifique padrões e faça previsões. As siglas F.B e F.A, significam resspectivamente a freqüência relativa e a freqüência absoluta.<br>A relativa é o percentual em relação a todos os outros números, já a absoluta é a quantidade de recorrências individuais.<br>Ao selecionar intervalo de números e posições iremos trazer os dados desse intervalo de números, dentro dessas respectivas posições.<br>O intúito dessa funcionalidade é mostrar a força de cada número em cada posição, criando assim uma tendência possivel de recorrência para o próximo concurso.</p>
+                    <div class="grid g-1">
+                        <div class="field">
+                            <select>
+                                <option value="null" selected disabled>Selecione a frequência</option>
+                            </select>
+                            <span>Ao selecionar a frequência você está dizendo ao sistema que você deseja essa quantidade de números mais frequêntes em cada posição. Por exemplo a frequência de 3 números, serão as combinações utilizando os 3 números mais recorrentes de cada posição.</span>
+                        </div>
+                    </div>
+                    <div class="grid g-1">
+                        <button type="button" class="button">Gerar</button>
+                    </div>
                 </div>
-                <div class="player">
-                    <i class="bi bi-play-circle-fill" data-audio="audio-02"></i>
-                    <p class="typography-text">Instrução</p>
+                <div class="error">
+                    <i class="bi bi-exclamation-circle-fill"></i>
+                    <p>Erro</p>
                 </div>
-                <form id="analysis-numbers" class="wrapper">
+            </section>
+            <!-- FA & FR -->
+            <section class="card">
+                <div class="grid g-1">
+                    <h1>Frequências Relativas & Absolutas</h1>
+                    <div class="wrapper">
+                        <p>As siglas F.B. e F.A. correspondem à frequência relativa e à frequência absoluta, respectivamente. A frequência relativa indica a força de um número em relação aos demais, expressa em porcentagem. Já a frequência absoluta mostra quantas vezes um número aparece individualmente. Ao combinar essa análise com a funcionalidade Zonas Fortes, você pode desenvolver estratégias poderosas.</p>
+                    </div>
+                </div>
+                <div class="grid g-1">
+                    <div class="player">
+                        <i class="bi bi-play-circle-fill" data-audio="audio-02"></i>
+                        <p>Instrução</p>
+                    </div>
+                </div>
+                <div id ="all-frequencies" class="grid g-10"></div>
+            </section>
+            <!-- Sequence Consult -->
+            <section class="card">
+                <div class="grid g-1">
+                    <h1>Consultar Sequência</h1>
+                    <div class="wrapper">
+                        <p>Embora seja possível que a mesma combinação de números seja sorteada mais de uma vez, a probabilidade é extremamente baixa. Nossa ferramenta permite que você verifique se sua combinação já foi sorteada anteriormente.</p>
+                    </div>
+                </div>
+                <div class="grid g-1">
+                    <div class="player">
+                        <i class="bi bi-play-circle-fill" data-audio="audio-03"></i>
+                        <p>Instrução</p>
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="grid g-1">
+                        <div class="field">
+                            <input type="text" class="sequence-mask" placeholder="00, 00, 00, 00, 00, 00">
+                            <span>Realize o preenchimento com zeros à esquerda em números menores que 10, garantindo um formato de dois dígitos. Exemplo: 01, 02, 03.</span>
+                        </div>
+                    </div>
+                    <div class="grid g-1">
+                        <button type="button" class="button">Consultar</button>
+                    </div>
+                </div>
+                <div class="error">
+                    <i class="bi bi-exclamation-circle-fill"></i>
+                    <p>Erro</p>
+                </div>
+            </section>
+            <!-- Contest Consult -->
+            <section class="card">
+                <div class="grid g-1">
+                    <h1>Consultar Concurso</h1>
+                    <div class="wrapper">
+                        <p>Consulte aqui todas as informações de um concurso específico, desde o primeiro até o mais recente. Encontre detalhes completos sobre os números sorteados, valores dos prêmios e muito mais. Alguns concursos mais antigos podem conter informações vazias.</p>
+                    </div>
+                </div>
+                <div class="grid g-1">
+                    <div class="player">
+                        <i class="bi bi-play-circle-fill" data-audio="audio-04"></i>
+                        <p>Instrução</p>
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="grid g-1">
+                        <div class="field">
+                            <input type="text" class="contest-mask" placeholder="0">
+                            <span>Existem atualmente mais de 2800 concursos realizados pela Mega Sena. Consulte eles para ver suas respectivas informações.</span>
+                        </div>
+                    </div>
+                    <div class="grid g-1">
+                        <button type="button" class="button">Consultar</button>
+                    </div>
+                </div>
+                <div class="error">
+                    <i class="bi bi-exclamation-circle-fill"></i>
+                    <p>Erro</p>
+                </div>
+            </section>
+            <!-- Contests Interval Consult -->
+            <section class="card">
+                <div class="grid g-1">
+                    <h1>Análise de concursos</h1>
+                    <div class="wrapper">
+                        <p>Consulte aqui todas as informações sobre uma gama de concursos: total de premiações, acumulações, pontuações e muito mais. Escolha abaixo de qual a qual concurso deseja analisar. Caso queira um concurso específico, utilize nosso formulário de consulta individualizado. Alguns concursos mais antigos podem conter informações vazias.</p>
+                    </div>
+                </div>
+                <div class="grid g-1">
+                    <div class="player">
+                        <i class="bi bi-play-circle-fill" data-audio="audio-05"></i>
+                        <p>Instrução</p>
+                    </div>
+                </div>
+                <div class="wrapper">
                     <div class="grid g-2">
                         <div class="field">
-                            <select id="analysis-position-select-start"></select>
-                            <p class="typography-description">Não é possível selecionar uma posição inicial maior que o final.</p>
+                            <select>
+                                <option value="null" selected>Selecione o concurso inicial</option>
+                            </select>
+                            <span>Selecione o concurso inicial para análise. Não é possível um concurso inicial maior que o final.</span>
                         </div>
                         <div class="field">
-                            <select id="analysis-position-select-end" disabled></select>
-                            <p class="typography-description">Não é possível selecionar uma posição final maior que o inicial.</p>
+                            <select>
+                                <option value="null" selected disabled>Selecione o concurso final</option>
+                            </select>
+                            <span>Selecione até qual concurso deseja analisar. Não é possível um concurso final menor que o inicial.</span>
                         </div>
                     </div>
-                    <div class="grid g-2">
-                        <div class="field">
-                            <select id="analysis-number-select-start"></select>
-                            <p class="typography-description">Não é possível selecionar um número inicial maior que o final.</p>
-                        </div>
-                        <div class="field">
-                            <select id="analysis-number-select-end" disabled></select>
-                            <p class="typography-description">Não é possível selecionar um número final maior que o inicial.</p>
-                        </div>
+                    <div class="grid g-1">
+                        <button type="button" class="button">Consultar</button>
                     </div>
-                    <button type="submit">Analisar</button>
-                </form>
-                <div class="error success">
-                    <i class="bi bi-check-circle-fill"></i>
-                    <p class="typography-paragraph">Error</p>
                 </div>
-                <div id="analysis-number-container" class="grid g-10"></div>
-            </section>
-
-            <!-- Consult Sequence -->
-            <section>
-                <h2 class="typography-title">Consultar sequência</h2>
-                <div class="wrapper">
-                    <p class="typography-paragraph">Embora seja possível que a mesma combinação de números seja sorteada mais de uma vez, a probabilidade é extremamente baixa. Nossa ferramenta permite que você verifique se sua combinação já foi sorteada anteriormente.</p>
-                </div>
-                <div class="player">
-                    <i class="bi bi-play-circle-fill" data-audio="audio-03"></i>
-                    <p class="typography-text">Instrução</p>
-                </div>
-                <form id="consult-sequence" class="wrapper">
-                    <div class="field">
-                        <input id="consult-sequence-input" class="sequence-mask" type="text" placeholder="00, 00, 00, 00, 00, 00">
-                        <p class="typography-description">Realize o preenchimento com zeros à esquerda em números menores que 10, garantindo um formato de dois dígitos. Ex: 01, 02, 03.</p>
-                    </div>
-                    <button type="submit">Consultar</button>
-                </form>
-                <div id="consult-sequence-error" class="error success">
-                    <i class="bi bi-check-circle-fill"></i>
-                    <p class="typography-paragraph">Error</p>
+                <div class="error">
+                    <i class="bi bi-exclamation-circle-fill"></i>
+                    <p>Erro</p>
                 </div>
             </section>
-            
-            <!-- Consult Contest -->
-            <section>
-                <h2 class="typography-title">Consultar Concurso</h2>
-                <div class="wrapper">
-                    <p class="typography-paragraph">Consulte aqui todas as informações de um concurso específico, desde o primeiro até o mais recente. Encontre detalhes completos sobre os números sorteados, valores dos prêmios e muito mais. Alguns concursos mais antigos podem conter informações vazias.</p>
-                </div>
-                <div class="player">
-                    <i class="bi bi-play-circle-fill" data-audio="audio-04"></i>
-                    <p class="typography-text">Instrução</p>
-                </div>
-                <form id="consult-contest" class="wrapper">
-                    <div class="field">
-                        <input id="consult-contest-input" class="contest-mask" type="text" placeholder="0">
-                        <p class="typography-description">Existem atualmente mais de 2800 concursos realizados pela Mega Sena. Consulte eles para ver suas respectivas informações.</p>
-                    </div>
-                    <button type="submit">Consultar</button>
-                </form>
-                <div id="consult-contest-error" class="error success">
-                    <i class="bi bi-check-circle-fill"></i>
-                    <p class="typography-paragraph">Error</p>
-                </div>
-                <div id="consult-result" class="wrapper hidden"></div>
-            </section>
-
-            <!-- Analysis Contests -->
-            <section>
-                <h2 class="typography-title">Análise de concursos</h2>
-                <div class="wrapper">
-                    <p class="typography-paragraph">Consulte aqui todas as informações sobre uma gama de concursos: total de premiações, acumulações, pontuações e muito mais. Escolha abaixo de qual a qual concurso deseja analisar. Caso queira um concurso específico, utilize nosso formulário de consulta individualizado. Alguns concursos mais antigos podem conter informações vazias.</p>
-                </div>
-                <div class="player">
-                    <i class="bi bi-play-circle-fill" data-audio="audio-05"></i>
-                    <p class="typography-text">Instrução</p>
-                </div>
-                <form id="analysis-contests" class="wrapper">
-                    <div class="grid g-2">
-                        <div class="field">
-                            <select id="analysis-contest-select-start"></select>
-                            <p class="typography-description">Selecione o concurso inicial para análise. Não é possível um concurso inicial maior que o final.</p>
-                        </div>
-                        <div class="field">
-                            <select id="analysis-contest-select-end" disabled></select>
-                            <p class="typography-description">Selecione até qual concurso deseja analisar. Não é possível um concurso final menor que o inicial.</p>
-                        </div>
-                    </div>
-                    <button type="submit">Analisar</button>
-                </form>
-                <div id="analysis-contest-error" class="error success">
-                    <i class="bi bi-check-circle-fill"></i>
-                    <p class="typography-paragraph">Error</p>
-                </div>
-                <div id="analysis-contest-result" class="wrapper hidden"></div>
-            </section>
-
             <!-- Strong Zones -->
-            <section>
-                <h2 class="typography-title">Zonas fortes</h2>
-                <div class="wrapper">
-                    <p class="typography-paragraph">Ao analisar os resultados históricos dos sorteios, identificamos uma tendência interessante: a ocorrência de 'zonas fortes' em determinadas posições do jogo. Essas zonas correspondem a intervalos numéricos que são sorteados com maior frequência do que outros. Por exemplo, a primeira posição do jogo demonstra uma preferência por números entre 1 e 10, enquanto a segunda posição apresenta uma concentração de sorteios entre 15 e 25. Essa informação pode ser útil para jogadores que buscam desenvolver estratégias de jogo baseadas em dados estatísticos, permitindo a seleção de números com maior probabilidade de serem sorteados. Essas zonas se alteram conforme saem novos concursos, então nosso sistema calcula isso para você.</p>
+            <section class="card">
+                <div class="grid g-1">
+                    <h1>Zonas Fortes</h1>
+                    <div class="wrapper">
+                        <p>Ao analisar os resultados históricos dos sorteios, identificamos uma tendência interessante: a ocorrência de 'zonas fortes' em determinadas posições do jogo. Essas zonas correspondem a intervalos numéricos que são sorteados com maior frequência do que outros. Por exemplo, a primeira posição do jogo demonstra uma preferência por números entre 1 e 10, enquanto a segunda posição apresenta uma concentração de sorteios entre 15 e 25. Essa informação pode ser útil para jogadores que buscam desenvolver estratégias de jogo baseadas em dados estatísticos, permitindo a seleção de números com maior probabilidade de serem sorteados. Essas zonas se alteram conforme saem novos concursos, então nosso sistema calcula isso para você.</p>
+                    </div>
                 </div>
-                <div class="player">
-                    <i class="bi bi-play-circle-fill" data-audio="audio-06"></i>
-                    <p class="typography-text">Instrução</p>
+                <div class="grid g-1">
+                    <div class="player">
+                        <i class="bi bi-play-circle-fill" data-audio="audio-06"></i>
+                        <p>Instrução</p>
+                    </div>
                 </div>
-                <div class="error success">
-                    <i class="bi bi-check-circle-fill"></i>
-                    <p class="typography-paragraph">Error</p>
+                <div class="grid g-1">
+                    <ul id="strong-zones" class="list"></ul>
                 </div>
-                <div id="zones-result" class="wrapper hidden"></div>
-                <button id="zones-submit" type="button">Verificar</button>
+            </section>
+            <!-- Winners Interval -->
+            <section class="card">
+                <div class="grid g-1">
+                    <h1>Intervalo médio de acertos</h1>
+                    <div class="wrapper">
+                        <p>Uma análise detalhada dos concursos revelou um padrão interessante nos intervalos entre as vitórias. Observou-se que os prêmios de 4 e 5 acertos são distribuídos consistentemente em todos os concursos, com pelo menos um ganhador em cada concurso. No entanto, o mesmo não se aplica ao prêmio máximo de 6 acertos. Este, por sua vez, apresenta um intervalo médio de concursos entre cada ocorrência de um novo ganhador. Este intervalo pode se alterar conforme surgem novos concursos, então nosso sistema calcula essa média para você.</p>
+                    </div>
+                </div>
+                <div class="grid g-1">
+                    <div class="player">
+                        <i class="bi bi-play-circle-fill" data-audio="audio-07"></i>
+                        <p>Instrução</p>
+                    </div>
+                </div>
+                <div class="grid g-1">
+                    <ul id="winners-interval" class="list"></ul>
+                </div>
             </section>
         </main>
-
-        <!-- Footer -->
-        <footer class="protected">
-            <div>
-                <a href="">Termos de uso</a>
-                <a href="">Políticas de privacidade</a>
-                <a href="">Contato</a>
-            </div>
-            <div>
-                <p>Elaborado e desenvolvido por Daniel Mazzeu.<br>Todos os direitos reservados 2025.</p>
-            </div>
-        </footer>
         
     </body>
 </html>

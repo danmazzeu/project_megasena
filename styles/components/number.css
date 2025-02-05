@@ -1,0 +1,23 @@
+.number {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #222;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.number > h2 {
+    color: #fff;
+    font-size: 22px;
+    font-weight: 900;
+    text-shadow: 1px 1px 1px #000;
+}
+
+.number > p {
+    color: #999;
+    text-shadow: 1px 1px 1px #000;
+}

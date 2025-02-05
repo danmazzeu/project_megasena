@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    outline: none !important;
+    font-size: 12px;
+    font-family: "Lato", sans-serif;
+    font-optical-sizing: auto;
+    text-rendering: optimizeLegibility;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+    -webkit-tap-highlight-color: transparent !important;
+}
+
+html,
+body {
+    text-size-adjust: none !important;
+    -webkit-text-size-adjust: none !important;
+    -ms-text-size-adjust: none !important;
+    -moz-text-size-adjust: none !important;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+    padding: 30px;
+    background-color: #f5f5f5;
+}
+
+ul { list-style: none; }
+
+br { height: 1em; }
+
+button {cursor: pointer; }
+
+select {
+    cursor: pointer;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}
+
+button:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled {
+    background-color: #f4f4f4 !important;
+    cursor: default !important;
+}
+
+.hidden { display: none; }

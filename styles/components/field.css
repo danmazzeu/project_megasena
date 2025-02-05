@@ -1,0 +1,18 @@
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.field > input,
+.field > select {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+
+.field > input:hover,
+.field > select:hover {
+    border: 1px solid #333;
+}

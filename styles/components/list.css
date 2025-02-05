@@ -1,0 +1,17 @@
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.list > li {
+    line-height: 16px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px dashed #ccc;
+    background-color: #f9f9f9;
+}
+
+.list > li > b {
+    margin-right: 5px;
+}
