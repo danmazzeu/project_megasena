@@ -7,8 +7,8 @@
 .field > input,
 .field > select {
     padding: 10px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
     background-color: #fff;
 }
 

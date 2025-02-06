@@ -10,7 +10,7 @@
     padding: 30px;
     display: none;
     flex-direction: column;
-    gap: 15px;
+    gap: var(--gap);
     align-items: center;
     justify-content: center;
     background-color: #f5f5f5;

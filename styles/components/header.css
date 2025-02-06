@@ -5,10 +5,10 @@ header {
     width: 100%;
     max-width: 1000px;
     height: 150px;
-    border-radius: 10px;
+    border-radius: var(--radius);
     border: 1px solid #bbb;
     margin: auto auto 30px auto;
-    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+    box-shadow: var(--box-radius);
 }
 
 header > video {
@@ -28,7 +28,7 @@ header > div {
     bottom: 0;
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: var(--gap);
     justify-content: center;
     width: 100%;
     height: 100%;

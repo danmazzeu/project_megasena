@@ -3,12 +3,16 @@ import analyzeMegaSenaData from './repository.js';
 async function useMegaSenaData() {
     const datas = await analyzeMegaSenaData();
 
+    function formatCurrency(value) {
+        return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
+    }
+
     if (datas) {
         console.log("Results from other file", datas);
         console.log("Current Contest:", datas.currentContest);
         console.log("Strong Zones:", datas.strongZones);
+        console.log("All Contests:", datas.allContests);
 
-        // Last Contest
         const lastNumbers = document.getElementById('last-numbers');
         lastNumbers.innerHTML = '';
 
@@ -24,42 +28,25 @@ async function useMegaSenaData() {
 
         const info = {
             'Concurso': datas.currentContest.concurso,
-            'Ganhadores 4 números': datas.currentContest.premiacoes[2].ganhadores,
-            'Ganhadores 5 números': datas.currentContest.premiacoes[1].ganhadores,
-            'Ganhadores 6 números': datas.currentContest.premiacoes[0].ganhadores,
-            'Premiação 4 números': datas.currentContest.premiacoes[2].valorPremio,
-            'Premiação 5 números': datas.currentContest.premiacoes[1].valorPremio,
-            'Premiação 6 números': datas.currentContest.premiacoes[0].valorPremio,
-            'Locais Ganhadores': datas.currentContest.localGanhadores,
-            'Valor arrecadado próximo concurso': datas.currentContest.valorArrecadado
+            'Data': datas.currentContest.data || "Não informado",
+            'Local do sorteio': datas.currentContest.local ? datas.currentContest.local.toLowerCase().replace(/\b\w/i, l => l.toUpperCase()) : "Não informado",
+            'Data próximo concurso': datas.currentContest.dataProximoConcurso || "Não informado",
+            'Ganhadores 4 números': datas.currentContest.premiacoes && datas.currentContest.premiacoes[2] ? datas.currentContest.premiacoes[2].ganhadores : "Não informado",
+            'Ganhadores 5 números': datas.currentContest.premiacoes && datas.currentContest.premiacoes[1] ? datas.currentContest.premiacoes[1].ganhadores : "Não informado",
+            'Ganhadores 6 números': datas.currentContest.premiacoes && datas.currentContest.premiacoes[0] ? datas.currentContest.premiacoes[0].ganhadores : "Não informado",
+            'Premiação 4 números': datas.currentContest.premiacoes && datas.currentContest.premiacoes[2] ? formatCurrency(datas.currentContest.premiacoes[2].valorPremio) : "Não informado",
+            'Premiação 5 números': datas.currentContest.premiacoes && datas.currentContest.premiacoes[1] ? formatCurrency(datas.currentContest.premiacoes[1].valorPremio) : "Não informado",
+            'Premiação 6 números': datas.currentContest.premiacoes && datas.currentContest.premiacoes[0] ? formatCurrency(datas.currentContest.premiacoes[0].valorPremio) : "Não informado",
+            'Premiação estimada próximo concurso': formatCurrency(datas.currentContest.valorEstimadoProximoConcurso),
+            'Valor arrecadado': formatCurrency(datas.currentContest.valorArrecadado),
+            'Acumulou': datas.currentContest.acumulou ? 'Sim' : 'Não'
         };
-
-        function formatCurrency(value) {
-            return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
-        }
-
-        info['Premiação 4 números'] = formatCurrency(info['Premiação 4 números']);
-        info['Premiação 5 números'] = formatCurrency(info['Premiação 5 números']);
-        info['Premiação 6 números'] = formatCurrency(info['Premiação 6 números']);
-        info['Valor arrecadado próximo concurso'] = formatCurrency(info['Valor arrecadado próximo concurso']);
-
-        let locaisGanhadores = info['Locais Ganhadores'];
-        let locaisGanhadoresText = "";
-        if (locaisGanhadores && locaisGanhadores.length > 0) {
-            locaisGanhadores.forEach(local => locaisGanhadoresText += `${local}<br>`);
-        } else {
-            locaisGanhadoresText = "Não houve ganhadores neste concurso.";
-        }
 
         for (const key in info) {
             const listItem = document.createElement('li');
             let value = info[key];
 
-            if (key === 'Locais Ganhadores') {
-                value = locaisGanhadoresText;
-            }
-
-            listItem.innerHTML = `<b>${key}:</b> ${value}`;
+            listItem.innerHTML = `<strong>${key}:</strong> ${value}`;
             lastInfo.appendChild(listItem);
         }
 
@@ -91,8 +78,8 @@ async function useMegaSenaData() {
 
             numberDiv.innerHTML = `
                 <h2>${frequency.number}</h2>
-                <p><b>FA:</b>${frequency.absoluteFrequency}</p>
-                <p><b>FR:</b>${frequency.relativeFrequency.toFixed(2)}%</p> 
+                <p><strong>FA:</strong> ${frequency.absoluteFrequency}</p>
+                <p><strong>FR:</strong> ${frequency.relativeFrequency.toFixed(2)}%</p> 
             `;
 
             frequenciesContainer.appendChild(numberDiv);
@@ -104,8 +91,8 @@ async function useMegaSenaData() {
             emptyDiv.classList.add('number');
             emptyDiv.innerHTML = `
             <h2>-</h2>
-            <p><b>FA:</b>-</p>
-            <p><b>FR:</b>-%</p>
+            <p><strong>FA:</strong>-</p>
+            <p><strong>FR:</strong>-%</p>
             `;
             frequenciesContainer.appendChild(emptyDiv);
         }
@@ -131,14 +118,14 @@ async function useMegaSenaData() {
 
                 if (item && item.average) {
                     if (item.average == 1) {
-                        listItem.innerHTML = `<b>${key}:</b> Todos os concursos.<br><b>Vencedores:</b> ${item.winners}`;
+                        listItem.innerHTML = `<strong>${key}:</strong> Todos os concursos.<br><strong>Vencedores:</strong> ${item.winners}`;
                     } else {
-                        listItem.innerHTML = `<b>${key}:</b> Intervalo médio de ${item.average} concurso(s).<br><b>Vencedores:</b> ${item.winners}`;
+                        listItem.innerHTML = `<strong>${key}:</strong> Intervalo médio de ${item.average} concurso(s).<br><strong>Vencedores:</strong> ${item.winners}`;
                     }
                     winnersIntervalList.appendChild(listItem);
                 } else {
                     console.warn(`Dados ausentes para ${key}`);
-                    listItem.innerHTML = `<b>${key}:</b> Dados não disponíveis`;
+                    listItem.innerHTML = `<strong>${key}:</strong> Dados não disponíveis`;
                     winnersIntervalList.appendChild(listItem);
                 }
             }
@@ -150,35 +137,35 @@ async function useMegaSenaData() {
         }
 
         // Sequence Consult
-        const form = document.querySelector('#sequence-consult-form');
-        const input = document.querySelector('#sequence-consult-input');
-        const errorDiv = document.querySelector('#sequence-consult-error');
+        const sequenceform = document.querySelector('#sequence-consult-form');
+        const sequenceInput = document.querySelector('#sequence-consult-input');
+        const sequenceErrorDiv = document.querySelector('#sequence-consult-error');
 
-        input.addEventListener('input', () => {
+        sequenceInput.addEventListener('input', () => {
             errorDiv.style.display = 'none';
         });
 
-        form.addEventListener('submit', (event) => {
+        sequenceform.addEventListener('submit', (event) => {
             event.preventDefault();
 
-            const sequence = input.value;
+            const sequence = sequenceInput.value;
             if (!/^\d{2}, \d{2}, \d{2}, \d{2}, \d{2}, \d{2}$/.test(sequence)) {
-                displayError('Formato inválido. Use o formato: 00, 00, 00, 00, 00, 00.');
+                displayResult('Formato inválido. Use o formato: 00, 00, 00, 00, 00, 00.', 'fail');
                 return;
             }
 
             const numbers = sequence.split(', ').map(Number);
             if (hasDuplicates(numbers)) {
-                displayError('Números repetidos não são permitidos.');
+                displayResult('Números repetidos não são permitidos.', 'fail');
                 return;
             }
 
             if (!areNumbersInRange(numbers)) {
-                displayError('Os números devem estar entre 01 e 60.');
+                displayResult('Os números devem estar entre 01 e 60.', 'fail');
                 return;
             }
 
-            errorDiv.style.display = 'none';
+            sequenceErrorDiv.style.display = 'none';
 
             let found = false;
             for (const dozens in datas.allDozens) {
@@ -194,28 +181,101 @@ async function useMegaSenaData() {
             } else {
                 displayResult('A sequência nunca foi sorteada.', 'success');
             }
+
+            function hasDuplicates(arr) {
+                return new Set(arr).size !== arr.length;
+            }
+    
+            function areNumbersInRange(arr) {
+                return arr.every(num => num >= 1 && num <= 60);
+            }
+    
+            function displayResult(message, className) {
+                sequenceErrorDiv.style.display = 'flex';
+                sequenceErrorDiv.querySelector('p').textContent = message;
+                sequenceErrorDiv.classList.remove('fail', 'success');
+                sequenceErrorDiv.classList.add(className);
+            }
+        });
+        
+        // Contest Consult
+        const contestConsultForm = document.getElementById('contest-consult-form');
+        const contestConsultInput = document.getElementById('contest-consult-input');
+        const contestConsultResult = document.getElementById('contest-consult-result');
+        const contestConsultError = document.getElementById('contest-consult-error');
+        const contestConsultErrorText = contestConsultError.querySelector('p');
+        contestConsultResult.style.display = 'none';
+
+        contestConsultInput.addEventListener('input', function(event) {
+            contestConsultResult.style.display = 'none';
+            contestConsultError.style.display = 'none';
+            contestConsultResult.innerHTML = '';
         });
 
-        function hasDuplicates(arr) {
-            return new Set(arr).size !== arr.length;
-        }
+        contestConsultForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            contestConsultResult.style.display = 'flex';
+            contestConsultResult.innerHTML = '';
 
-        function areNumbersInRange(arr) {
-            return arr.every(num => num >= 1 && num <= 60);
-        }
+            const contestNumber = contestConsultInput.value.trim();
 
-        function displayError(message) {
-            errorDiv.style.display = 'flex';
-            errorDiv.querySelector('p').textContent = message;
-            errorDiv.classList.add('fail');
-        }
+            if (contestNumber === '') {
+                showError('Por favor, insira um número de concurso.', 'fail');
+                contestConsultResult.style.display = 'none';
+                return;
+            }
 
-        function displayResult(message, className) {
-            errorDiv.style.display = 'flex';
-            errorDiv.querySelector('p').textContent = message;
-            errorDiv.classList.remove('fail', 'success');
-            errorDiv.classList.add(className);
-        }
+            const contestData = datas.allContests.find(contest => contest.concurso === parseInt(contestNumber));
+
+            if (!contestData) {
+                showError('Concurso não encontrado.', 'fail');
+                contestConsultResult.style.display = 'none';
+                return;
+            }
+
+            showError('Concurso encontrado!', 'success');
+
+            const info = {
+                'Concurso': contestData.concurso,
+                'Data': contestData.data || "Não informado",
+                'Local do sorteio': contestData.local ? contestData.local.toLowerCase().replace(/\b\w/i, l => l.toUpperCase()) : "Não informado",
+                'Data próximo concurso': contestData.dataProximoConcurso || "Não informado",
+                'Dezenas sorteadas': contestData.dezenas.join(', ') || "Não informado",
+                'Ganhadores 4 números': contestData.premiacoes && contestData.premiacoes[2] ? contestData.premiacoes[2].ganhadores : "Não informado",
+                'Ganhadores 5 números': contestData.premiacoes && contestData.premiacoes[1] ? contestData.premiacoes[1].ganhadores : "Não informado",
+                'Ganhadores 6 números': contestData.premiacoes && contestData.premiacoes[0] ? contestData.premiacoes[0].ganhadores : "Não informado",
+                'Premiação 4 números': contestData.premiacoes && contestData.premiacoes[2] ? formatCurrency(contestData.premiacoes[2].valorPremio) : "Não informado",
+                'Premiação 5 números': contestData.premiacoes && contestData.premiacoes[1] ? formatCurrency(contestData.premiacoes[1].valorPremio) : "Não informado",
+                'Premiação 6 números': contestData.premiacoes && contestData.premiacoes[0] ? formatCurrency(contestData.premiacoes[0].valorPremio) : "Não informado",
+                'Premiação estimada próximo concurso': formatCurrency(contestData.valorEstimadoProximoConcurso),
+                'Valor arrecadado': formatCurrency(contestData.valorArrecadado),
+                'Acumulou': contestData.acumulou ? 'Sim' : 'Não'
+            };
+
+            for (const key in info) {
+                createListItem(contestConsultResult, `<strong>${key}:</strong> ${info[key]}`);
+            }
+
+            function createListItem(parent, content) {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = content;
+                parent.appendChild(listItem);
+            }
+
+            function showError(message, type) {
+                contestConsultErrorText.textContent = message;
+                contestConsultError.style.display = 'flex';
+                contestConsultError.classList.remove('fail', 'success');
+                contestConsultError.classList.add(type);
+            }
+
+            function formatCurrency(value) {
+                if (value === null || value === undefined) return "Não informado";
+                return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
+            }
+        });
+        
+        // Contests Interval Consult
         
     }
 }

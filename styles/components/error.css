@@ -2,9 +2,10 @@
     display: none;
     flex-direction: row;
     align-items: center;
-    padding: 10px;
+    width: 100%;
+    padding: var(--padding);
     border: 1px dashed transparent;
-    border-radius: 5px;
+    border-radius: var(--radius);
 }
 
 .error > i {

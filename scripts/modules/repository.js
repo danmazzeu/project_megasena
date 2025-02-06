@@ -189,7 +189,8 @@ async function analyzeMegaSenaData() {
         allDozens: dozens,
         combinations: combos,
         allWinners: winners,
-        averageSpacing: averageSpacing
+        averageSpacing: averageSpacing,
+        allContests: data
     };
 }
 

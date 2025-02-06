@@ -26,6 +26,7 @@
         <title>MEGALUMNI</title>
 
         <!-- Global Styles -->
+        <link rel="stylesheet" href="styles/global/variables.css">
         <link rel="stylesheet" href="styles/global/global.css">
         <link rel="stylesheet" href="styles/global/animations.css">
         <link rel="stylesheet" href="styles/global/typography.css">
@@ -67,6 +68,7 @@
             <i class="bi bi-arrow-counterclockwise"></i>
             <h1></h1>
             <p></p>
+            <span>Elaborado e desenvolvido por Daniel Mazzeu.<br>Todos os direitos reservados 2025.</span>
         </div>
 
         <!-- Header -->
@@ -111,7 +113,7 @@
                     </ul>
                 </div>
             </section>
-            <!-- Last Contest -->
+            <!-- Sequence Generator -->
             <section class="card">
                 <div class="grid g-1">
                     <h1>Gerador de sequências</h1>
@@ -239,21 +241,22 @@
                         <p>Instrução</p>
                     </div>
                 </div>
-                <div class="wrapper">
+                <form id="contest-consult-form" class="wrapper">
                     <div class="grid g-1">
                         <div class="field">
-                            <input type="text" class="contest-mask" placeholder="0">
+                            <input id="contest-consult-input" type="text" class="contest-mask" placeholder="0">
                             <span>Existem atualmente mais de 2800 concursos realizados pela Mega Sena. Consulte eles para ver suas respectivas informações.</span>
                         </div>
                     </div>
                     <div class="grid g-1">
-                        <button type="button" class="button">Consultar</button>
+                        <button type="submit" class="button">Consultar</button>
                     </div>
-                </div>
-                <div class="error">
+                </form>
+                <div id="contest-consult-error" class="error">
                     <i class="bi bi-exclamation-circle-fill"></i>
                     <p>Erro</p>
                 </div>
+                <ul id="contest-consult-result" class="list"></ul>
             </section>
             <!-- Contests Interval Consult -->
             <section class="card">
@@ -269,7 +272,7 @@
                         <p>Instrução</p>
                     </div>
                 </div>
-                <div class="wrapper">
+                <form id="contest-interval-form" class="wrapper">
                     <div class="grid g-2">
                         <div class="field">
                             <select>
@@ -285,13 +288,14 @@
                         </div>
                     </div>
                     <div class="grid g-1">
-                        <button type="button" class="button">Consultar</button>
+                        <button type="submit" class="button">Consultar</button>
                     </div>
-                </div>
-                <div class="error">
+                </form>
+                <div id="contest-interval-error" class="error">
                     <i class="bi bi-exclamation-circle-fill"></i>
                     <p>Erro</p>
                 </div>
+                <ul id="contest-interval-result" class="list"></ul>
             </section>
             <!-- Strong Zones -->
             <section class="card">

@@ -4,7 +4,7 @@
     border-radius: 5px;
     border: 0;
     color: #fff;
-    background-color: #222;
+    background-color: var(--theme);
 }
 
 .button:hover {

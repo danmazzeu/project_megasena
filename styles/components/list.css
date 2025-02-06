@@ -1,23 +1,22 @@
 .list {
     display: flex;
     flex-direction: row;
-    gap: 10px;
+    gap: var(--gap);
     flex-wrap: wrap;
 }
 
 .list > li {
     flex: 1;
     flex-basis: auto;
-    line-height: 18px;
-    padding: 10px;
-    border-radius: 10px;
-    border: 1px dashed #ccc;
-    background-color: #f9f9f9;
+    padding: var(--padding);
+    border: 1px dashed var(--border-color);
+    border-radius: var(--radius);
+    background-color: var(--secondary-bg);
+    font-weight: 300;
+    color: var(--text-color);
 }
 
-.list > li > b {
-    margin-right: 5px;
-}
+.list > li > b { margin-right: 5px; }
 
 @media all and (max-width: 500px) {
     .list { 
