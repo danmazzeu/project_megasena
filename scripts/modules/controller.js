@@ -122,7 +122,7 @@ async function useMegaSenaData() {
 
         // Winners Interval
         const winnersIntervalList = document.getElementById('winners-interval');
-        winnersIntervalList.innerHTML = ''; // Limpa a lista
+        winnersIntervalList.innerHTML = '';
 
         if (datas && datas.averageSpacing) {
             for (const key in datas.averageSpacing) {
@@ -147,6 +147,74 @@ async function useMegaSenaData() {
             const listItem = document.createElement('li');
             listItem.innerHTML = "Dados não disponíveis";
             winnersIntervalList.appendChild(listItem);
+        }
+
+        // Sequence Consult
+        const form = document.querySelector('#sequence-consult-form');
+        const input = document.querySelector('#sequence-consult-input');
+        const errorDiv = document.querySelector('#sequence-consult-error');
+
+        input.addEventListener('input', () => {
+            errorDiv.style.display = 'none';
+        });
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const sequence = input.value;
+            if (!/^\d{2}, \d{2}, \d{2}, \d{2}, \d{2}, \d{2}$/.test(sequence)) {
+                displayError('Formato inválido. Use o formato: 00, 00, 00, 00, 00, 00.');
+                return;
+            }
+
+            const numbers = sequence.split(', ').map(Number);
+            if (hasDuplicates(numbers)) {
+                displayError('Números repetidos não são permitidos.');
+                return;
+            }
+
+            if (!areNumbersInRange(numbers)) {
+                displayError('Os números devem estar entre 01 e 60.');
+                return;
+            }
+
+            errorDiv.style.display = 'none';
+
+            let found = false;
+            for (const dozens in datas.allDozens) {
+                const numbersInDozens = datas.allDozens[dozens].map(Number);
+                if (numbersInDozens.length === numbers.length && numbersInDozens.every((value, index) => value === numbers[index])) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (found) {
+                displayResult('A sequência já foi sorteada!', 'fail');
+            } else {
+                displayResult('A sequência nunca foi sorteada.', 'success');
+            }
+        });
+
+        function hasDuplicates(arr) {
+            return new Set(arr).size !== arr.length;
+        }
+
+        function areNumbersInRange(arr) {
+            return arr.every(num => num >= 1 && num <= 60);
+        }
+
+        function displayError(message) {
+            errorDiv.style.display = 'flex';
+            errorDiv.querySelector('p').textContent = message;
+            errorDiv.classList.add('fail');
+        }
+
+        function displayResult(message, className) {
+            errorDiv.style.display = 'flex';
+            errorDiv.querySelector('p').textContent = message;
+            errorDiv.classList.remove('fail', 'success');
+            errorDiv.classList.add(className);
         }
         
     }

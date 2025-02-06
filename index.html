@@ -63,6 +63,7 @@
 
         <!-- Loading -->
         <div id="loading">
+            <div class="logo">M</div>
             <i class="bi bi-arrow-counterclockwise"></i>
             <h1></h1>
             <p></p>
@@ -75,7 +76,7 @@
             </video>
             <div>
                 <h1>Megalumni</h1>
-                <p>"Deixamos você mais próximo da <span>vitória</span>."</p>
+                <p>"Deixamos você mais próximo da <span>vitória</span>"</p>
             </div>
         </header>
         
@@ -155,6 +156,16 @@
                         <div class="field">
                             <select>
                                 <option value="null" selected disabled>Selecione a frequência</option>
+                                <option value="1">Frequência de 1 número</option>
+                                <option value="2">Frequência de 2 número</option>
+                                <option value="3">Frequência de 3 número</option>
+                                <option value="4">Frequência de 4 número</option>
+                                <option value="5">Frequência de 5 número</option>
+                                <option value="6">Frequência de 6 número</option>
+                                <option value="7">Frequência de 7 número</option>
+                                <option value="8">Frequência de 8 número</option>
+                                <option value="9">Frequência de 9 número</option>
+                                <option value="10">Frequência de 10 número</option>
                             </select>
                             <span>Ao selecionar a frequência você está dizendo ao sistema que você deseja essa quantidade de números mais frequêntes em cada posição. Por exemplo a frequência de 3 números, serão as combinações utilizando os 3 números mais recorrentes de cada posição.</span>
                         </div>
@@ -198,18 +209,18 @@
                         <p>Instrução</p>
                     </div>
                 </div>
-                <div class="wrapper">
+                <form id="sequence-consult-form" class="wrapper">
                     <div class="grid g-1">
                         <div class="field">
-                            <input type="text" class="sequence-mask" placeholder="00, 00, 00, 00, 00, 00">
+                            <input id="sequence-consult-input" type="text" class="sequence-mask" placeholder="00, 00, 00, 00, 00, 00">
                             <span>Realize o preenchimento com zeros à esquerda em números menores que 10, garantindo um formato de dois dígitos. Exemplo: 01, 02, 03.</span>
                         </div>
                     </div>
                     <div class="grid g-1">
-                        <button type="button" class="button">Consultar</button>
+                        <button type="submit" class="button">Consultar</button>
                     </div>
-                </div>
-                <div class="error">
+                </form>
+                <div id="sequence-consult-error" class="error">
                     <i class="bi bi-exclamation-circle-fill"></i>
                     <p>Erro</p>
                 </div>
