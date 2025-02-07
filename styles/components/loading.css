@@ -28,9 +28,10 @@
 #loading > .logo {
     font-size: 70px;
     line-height: 70px;
-    font-family: "Orbitron", serif;
+    font-family: "Archivo Black", serif;
     font-weight: 900;
     animation: jello 2s infinite;
+    color: var(--theme);
 }
 
 #loading > i {

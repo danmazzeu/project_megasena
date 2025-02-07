@@ -1,3 +1,8 @@
+footer {
+    border-top: 2px dashed #ddd;
+    padding-top: 30px;
+}
+
 footer div {
     display: flex;
     flex-direction: row;

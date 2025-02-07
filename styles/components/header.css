@@ -1,0 +1,23 @@
+header {
+    border-bottom: 2px dashed #ddd;
+    padding: 35px;
+}
+
+header h1 {
+    text-align: center;
+    font-size: 50px;
+    font-family: "Archivo Black", serif;
+    font-weight: 900;
+    color: var(--theme);
+    animation: jello 2s infinite;
+    text-shadow: 1px 1px 1px #fff;
+}
+
+header p {
+    font-size: 14px;
+    font-weight: 300;
+    font-style: italic;
+    text-align: center;
+    color: #666;
+    text-shadow: 1px 1px 1px #fff;
+}

@@ -40,7 +40,7 @@ body { padding: 0 !important; }
 }
 
 #presentation > .fade > h1 {
-    font-family: 'Orbitron';
+    font-family: "Archivo Black", serif;
     font-size: 45px;
     color: #fff;
     text-shadow: 1px 1px 1px #000;
