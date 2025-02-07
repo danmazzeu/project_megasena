@@ -36,7 +36,7 @@ body { padding: 0 !important; }
     gap: 20px;
     align-items: center;
     justify-content: center;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.7);
 }
 
 #presentation > .fade > h1 {
@@ -60,7 +60,7 @@ body { padding: 0 !important; }
 #presentation > .fade > span {
     text-align: center;
     font-size: 11px;
-    color: #444;
+    color: #555;
     line-height: 16px;
     max-width: 300px;
     text-shadow: 1px 1px 1px #000;
