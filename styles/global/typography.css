@@ -1,13 +1,18 @@
 h1 {
-    font-family: "Orbitron", serif;
     font-size: 18px;
     font-weight: 800;
     text-transform: uppercase;
+    color: var(--theme);
 }
 
-p {
-    font-weight: 400;
-    color: var(--text-color);
+h2 {
+    font-size: 22px;
+    font-weight: 900;
+}
+
+h3 {
+    font-weight: 800;
+    text-transform: uppercase;
 }
 
 span {
@@ -15,4 +20,8 @@ span {
     font-weight: 400;
     padding: 0 3px;
     color: #888;
+}
+
+strong {
+    font-weight: 700;
 }

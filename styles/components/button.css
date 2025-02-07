@@ -1,9 +1,9 @@
 .button {
     width: fit-content;
-    padding: 10px 15px;
-    border-radius: 5px;
+    padding: var(--button-padding);
+    border-radius: var(--button-radius);
     border: 0;
-    color: #fff;
+    color: var(--button-color);
     background-color: var(--theme);
 }
 

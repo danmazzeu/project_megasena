@@ -12,6 +12,7 @@ async function useMegaSenaData() {
         console.log("Current Contest:", datas.currentContest);
         console.log("Strong Zones:", datas.strongZones);
         console.log("All Contests:", datas.allContests);
+        console.log("All Combinations:", datas.combinations);
 
         const lastNumbers = document.getElementById('last-numbers');
         lastNumbers.innerHTML = '';
@@ -19,8 +20,8 @@ async function useMegaSenaData() {
         datas.currentContest.dezenas.forEach((numero, index) => {
             const div = document.createElement('div');
             div.classList.add('number');
-            div.innerHTML = `<h2>${numero}</h2><p>Posição: ${index + 1}</p>`;
-            lastNumbers.appendChild(div);
+            div.innerHTML = `<h2>${numero}</h2><p><strong>Posição:</strong> ${index + 1}</p>`;
+            lastNumbers.appendChild(div);   
         });
 
         const lastInfo = document.getElementById('last-info');
@@ -103,7 +104,7 @@ async function useMegaSenaData() {
 
         datas.strongZones.forEach((zf, index) => {
             const listItem = document.createElement('li');
-            listItem.innerHTML = `<b>Posição ${index + 1}:</b> ${zf.join(', ')}`;
+            listItem.innerHTML = `<strong>Posição ${index + 1}:</strong> ${zf.join(', ')}`;
             strongZonesList.appendChild(listItem);
         });
 
@@ -275,8 +276,71 @@ async function useMegaSenaData() {
             }
         });
         
-        // Contests Interval Consult
+        // Generate Sequence
+        function generateNewCombination(combinations, numsequence) {
+            const newCombination = [];
+            const usedNumbers = new Set();
+            const numPositions = combinations.length;
+
+            for (let i = 0; i < numPositions; i++) {
+                if (!combinations[i]) {
+                    newCombination.push(null);
+                    continue;
+                }
+                
+                const numbersForPosition = combinations[i].slice(0, numsequence);
         
+                const availableNumbers = numbersForPosition.filter(num => {
+                    const numInt = parseInt(num);
+                    return (i === 0 || numInt >= parseInt(newCombination[i - 1])) && !usedNumbers.has(numInt);
+                });
+        
+                if (availableNumbers.length > 0) {
+                    const randomIndex = Math.floor(Math.random() * availableNumbers.length);
+                    const selectedNumber = availableNumbers[randomIndex];
+                    newCombination.push(selectedNumber);
+                    usedNumbers.add(parseInt(selectedNumber));
+                } else {
+                    newCombination.push(null);
+                }
+            }
+            return newCombination;
+        }
+
+        document.querySelector('#generator-form select').addEventListener('change', (event) => {
+            const generatorError = document.getElementById('generator-error');
+            generatorError.style.display = 'none';
+            document.getElementById('generator-result').classList.add('hidden');
+        });
+
+        document.getElementById('generator-form').addEventListener('submit', (event) => {
+            event.preventDefault();
+            const numsequence = document.querySelector('#generator-form select').value;
+
+            if (numsequence === 'null') {
+                showError('É necessário selecionar uma frequência', 'fail');
+                return;
+            }
+
+            function showError(message, type) {
+                const generatorError = document.getElementById('generator-error');
+                generatorError.querySelector('p').textContent = message;
+                generatorError.style.display = 'flex';
+                generatorError.classList.remove('fail', 'success');
+                generatorError.classList.add(type);
+            }
+
+            const newCombination = generateNewCombination(datas.combinations, numsequence);
+            const numbers = document.querySelectorAll("#generator-result .number h2");
+        
+            for (let i = 0; i < numbers.length; i++) {
+                numbers[i].textContent = newCombination[i] || "";
+            }
+
+            document.getElementById('generator-result').classList.remove('hidden');
+            showError('Sequência gerada com sucesso', 'success');
+        });
+
     }
 }
 

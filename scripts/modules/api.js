@@ -11,6 +11,7 @@ async function api() {
         return allData;
     } catch (error) {
         console.error(error);
+        loading(true, 'Falha de sincronia', 'Falha ao tentar sincronizar dados, atualize a página e tente novamente.');
         return [];
     }
 }

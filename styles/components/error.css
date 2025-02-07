@@ -9,18 +9,18 @@
 }
 
 .error > i {
-    font-size: 14px;
+    font-size: var(--error-icon-size);
     margin-right: 5px;
 }
 
 .error.fail {
-    color: #a31010;
-    border-color: #a31010;
-    background-color: #fffafa;
+    color: var(--error-fail-color);
+    border-color: var(--error-fail-color);
+    background-color: var(--error-fail-bg);
 }
 
 .error.success {
-    color: green;
-    border-color: green;
-    background-color: #ebfced;
+    color: var(--error-success-color);
+    border-color: var(--error-success-color);
+    background-color: var(--error-success-bg);
 }

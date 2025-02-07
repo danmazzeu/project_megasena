@@ -27,6 +27,9 @@ body {
 html { scroll-behavior: smooth; }
 
 body {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
     padding: 30px;
     background-color: var(--body-bg);
 }
@@ -52,4 +55,4 @@ textarea:disabled {
     cursor: default !important;
 }
 
-.hidden { display: none; }
+.hidden { display: none !important; }

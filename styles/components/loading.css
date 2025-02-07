@@ -10,7 +10,7 @@
     padding: 30px;
     display: none;
     flex-direction: column;
-    gap: var(--gap);
+    gap: 20px;
     align-items: center;
     justify-content: center;
     background-color: #f5f5f5;
@@ -23,11 +23,11 @@
 
 #loading > * {
     text-align: center;
-    text-shadow: 1px 1px 1px #fff;
 }
 
 #loading > .logo {
-    font-size: 70px;    
+    font-size: 70px;
+    line-height: 70px;
     font-family: "Orbitron", serif;
     font-weight: 900;
     animation: jello 2s infinite;

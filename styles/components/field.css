@@ -1,18 +1,18 @@
 .field {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: var(--field-gap);
 }
 
 .field > input,
 .field > select {
-    padding: 10px;
-    border-radius: 5px;
+    padding: var(--field-padding);
+    border-radius: var(--field-radius);
     border: 1px solid var(--border-color);
-    background-color: #fff;
+    background-color: var(--field-bg);
 }
 
 .field > input:hover,
 .field > select:hover {
-    border: 1px solid #333;
+    border: 1px solid var(--theme);
 }

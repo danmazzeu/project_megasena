@@ -1,0 +1,10 @@
+.link,
+.visited,
+.active {
+    color: var(--theme);
+    text-decoration: underline;
+}
+
+.link:hover {
+    color: #000;
+}
