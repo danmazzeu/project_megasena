@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import fetch from 'node-fetch';
+import axios from 'axios';  // Import axios
 import fs from 'fs/promises';
 
 const app = express();
@@ -29,11 +29,8 @@ app.get('/', async (req, res) => {
         let data;
 
         try {
-            const response = await fetch('https://servicebus2.caixa.gov.br/portaldeloterias/api/megasena');
-            if (!response.ok) {
-                throw new Error(`Mega Sena API returned ${response.status}: ${await response.text()}`);
-            }
-            data = await response.json();
+            const response = await axios.get('https://servicebus2.caixa.gov.br/portaldeloterias/api/megasena'); // Use axios.get
+            data = response.data; // Access data like this with axios
 
             try {
                 await fs.writeFile('backup.json', JSON.stringify(data, null, 2));
