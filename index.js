@@ -5,19 +5,7 @@ import fetch from 'node-fetch';
 const app = express();
 const port = 3001;
 
-const allowedOrigins = ['https://www.megalumni.com.br'];
 
-app.use(cors({
-    origin: function (origin, callback) {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true)
-        } else {
-            callback(new Error('Not allowed by CORS'))
-        }
-    }
-}));
-
-app.use(cors());
 
 app.get('/api/megasena', async (req, res) => { // Correct route: /api/megasena
     try {
