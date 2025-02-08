@@ -1,16 +1,19 @@
 import { loading } from "./loading.js";
 
 async function api() {
-    loading(true, 'Sincronizando dados', 'Aguarde enquanto analisamos todos os dados dos concursos, para gerar todas as estatísticas e dados desta página.');
+    loading(true, 'Sincronizando dados', 'Aguarde...');
     try {
-        const response = await fetch('projectmegasena-production.up.railway.app');
+        const response = await fetch('http://localhost:3001/api/megasena'); // Fetch from the proxy server
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`API request failed with status ${response.status}: ${errorText}`);
+        }
         const data = await response.json();
-        const allData = data.map(contest => ({ ...contest }));
         loading(false);
-        return allData;
+        return data;
     } catch (error) {
-        console.error(error);
-        loading(true, 'Manutenção', 'Falha ao tentar sincronizar dados, atualize a página e tente novamente.');
+        console.error("Error fetching data:", error);
+        loading(true, 'Manutenção', 'Falha ao sincronizar dados. Tente novamente mais tarde.');
         return [];
     }
 }
