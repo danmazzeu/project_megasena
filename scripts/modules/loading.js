@@ -7,6 +7,11 @@ export function loading(status, title = 'empty', description = 'empty') {
         if (title == 'empty') { alert('Configure o título do loading.'); return; }
         if (description == 'empty') { alert('Configure a descrição do loading.'); return; }
 
+        if (title == 'Manutenção') {
+            loading.querySelector('i').classList.remove('bi-arrow-counterclockwise');
+            loading.querySelector('i').classList.add('bi-emoji-frown-fill');
+        }
+
         loading.querySelector('h1').textContent = title;
         loading.querySelector('p').textContent = description;
         loading.querySelector('p').style.maxWidth = '300px';

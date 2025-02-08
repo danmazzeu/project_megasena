@@ -13,7 +13,7 @@ async function api() {
         return data;
     } catch (error) {
         console.error("Error fetching data:", error);
-        loading(true, 'Manutenção', 'Falha ao sincronizar dados. Tente novamente mais tarde.');
+        loading(true, 'Manutenção', 'Servidor temporariamente em manutenção. Tente novamente mais tarde.');
         return [];
     }
 }
