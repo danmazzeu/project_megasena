@@ -8,11 +8,11 @@ async function useMegaSenaData() {
     }
 
     if (datas) {
-        console.log("Results from other file", datas);
-        console.log("Current Contest:", datas.currentContest);
-        console.log("Strong Zones:", datas.strongZones);
-        console.log("All Contests:", datas.allContests);
-        console.log("All Combinations:", datas.combinations);
+        //console.log("Results from other file", datas);
+        //console.log("Current Contest:", datas.currentContest);
+        //console.log("Strong Zones:", datas.strongZones);
+        //console.log("All Contests:", datas.allContests);
+        //console.log("All Combinations:", datas.combinations);
 
         const lastNumbers = document.getElementById('last-numbers');
         lastNumbers.innerHTML = '';
