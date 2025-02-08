@@ -29,7 +29,7 @@ app.get('/', async (req, res) => {
         let data;
 
         try {
-            const response = await fetch('https://loteriascaixa-api.herokuapp.com/api/megasena');
+            const response = await fetch('https://servicebus2.caixa.gov.br/portaldeloterias/api/megasena');
             if (!response.ok) {
                 throw new Error(`Mega Sena API returned ${response.status}: ${await response.text()}`);
             }
