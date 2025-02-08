@@ -4,7 +4,7 @@ import axios from 'axios';  // Import axios
 import fs from 'fs/promises';
 
 const app = express();
-const port = 3001;
+const port = process.env.PORT || 3001;
 
 const allowedOrigins = [
     'https://danmazzeu.github.io',
