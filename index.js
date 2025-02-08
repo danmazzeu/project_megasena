@@ -26,28 +26,40 @@ app.use(cors({
 
 app.get('/', async (req, res) => {
     try {
-        const response = await fetch('https://loteriascaixa-api.herokuapp.com/api/megasena');
-        if (!response.ok) {
-            const errorText = await response.text();
-            console.error("Mega Sena API Error:", response.status, errorText);
-            throw new Error(`Mega Sena API returned ${response.status}: ${errorText}`);  
-        }
-        const data = await response.json();
-        
+        let data;
+
         try {
-            await fs.writeFile('backup.json', JSON.stringify(data, null, 2));
-            console.log('Data saved to backup.json');
-        } catch (fileError) {
-            console.error('Error saving to file:', fileError);
-             res.status(500).json({ error: 'Error saving data to file' });
-            return;
+            const response = await fetch('https://loteriascaixa-api.herokuapp.com/api/megasena');
+            if (!response.ok) {
+                throw new Error(`Mega Sena API returned ${response.status}: ${await response.text()}`);
+            }
+            data = await response.json();
+
+            try {
+                await fs.writeFile('backup.json', JSON.stringify(data, null, 2));
+                console.log('Data saved to backup.json');
+            } catch (fileError) {
+                console.error('Error saving to file:', fileError);
+            }
+
+        } catch (apiError) {
+            console.error("Mega Sena API Error:", apiError);
+            try {
+                const backupData = await fs.readFile('backup.json', 'utf8');
+                data = JSON.parse(backupData);
+                console.log('Data retrieved from backup.json');
+            } catch (backupError) {
+                console.error('Error reading from backup.json:', backupError);
+                res.status(500).json({ error: 'Failed to fetch data from API and backup' });
+                return;
+            }
         }
 
         res.json(data);
 
     } catch (error) {
-        console.error("Proxy Server Error:", error);
-        res.status(500).json({ error: 'Error fetching data from API' });
+        console.error("General Server Error:", error);
+        res.status(500).json({ error: 'A general server error occurred' });
     }
 });
 
