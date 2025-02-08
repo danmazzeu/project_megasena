@@ -25,6 +25,7 @@ export function loading(status, title = 'empty', description = 'empty') {
     if (status === false) {
         setTimeout(() => {
             loading.style.display = 'none';
+            document.body.style.overflow = 'auto';
         }, 500);
     }
 }
