@@ -6,7 +6,6 @@ async function api() {
         const response = await fetch('https://loteriascaixa-api.herokuapp.com/api/megasena/');
         const data = await response.json();
         const allData = data.map(contest => ({ ...contest }));
-        console.log(data);
         loading(false);
         return allData;
     } catch (error) {
