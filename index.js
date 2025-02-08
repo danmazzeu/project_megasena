@@ -34,8 +34,6 @@ app.get('/', async (req, res) => {
             console.log("Backup file updated successfully.");
         } catch (fileError) {
             console.error('Error saving to file:', fileError);
-            res.status(500).json({ error: 'Error saving data to file' });
-            return;
         }
 
         res.json(data);
@@ -45,7 +43,15 @@ app.get('/', async (req, res) => {
         if (error.response) {
             console.error("Mega Sena API Error:", error.response.status, error.response.data);
         }
-        res.status(500).json({ error: 'Error fetching data from API' });
+
+        try {
+            const backupData = await fs.readFile('backup.json', 'utf8');
+            console.log("Serving data from backup.json");
+            res.json(JSON.parse(backupData));
+        } catch (backupError) {
+            console.error("Error reading backup file:", backupError);
+            res.status(500).json({ error: 'Error fetching data from API and backup' });
+        }
     }
 });
 
