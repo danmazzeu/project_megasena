@@ -8,6 +8,7 @@ const port = 3001;
 const allowedOrigins = [
     'https://danmazzeu.github.io',
     'https://megalumni.com.br',
+    'https://www.megalumni.com.br',
     'http://localhost:3000',
     'http://localhost:3001'
 ];
