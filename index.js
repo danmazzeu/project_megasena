@@ -5,7 +5,10 @@ import fetch from 'node-fetch';
 const app = express();
 const port = 3001;
 
-const allowedOrigins = ['https://www.megalumni.com.br'];
+const allowedOrigins = [
+    'https://danmazzeu.github.io',
+    'http://localhost:3001',
+];
 
 app.use(cors({
     origin: function (origin, callback) {
