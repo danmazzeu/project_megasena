@@ -16,6 +16,10 @@ export function loading(status, title = 'empty', description = 'empty') {
         loading.querySelector('p').textContent = description;
         loading.querySelector('p').style.maxWidth = '300px';
         loading.classList.add('show');
+
+        if (getComputedStyle(loading).display === 'flex') {
+            document.body.style.overflow = 'hidden';
+        }
     }
 
     if (status === false) {
