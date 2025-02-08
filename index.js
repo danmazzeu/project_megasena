@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import fetch from 'node-fetch';
+import fs from 'fs/promises';
 
 const app = express();
 const port = 3001;
@@ -32,7 +33,18 @@ app.get('/', async (req, res) => {
             throw new Error(`Mega Sena API returned ${response.status}: ${errorText}`);  
         }
         const data = await response.json();
+        
+        try {
+            await fs.writeFile('backup.json', JSON.stringify(data, null, 2));
+            console.log('Data saved to backup.json');
+        } catch (fileError) {
+            console.error('Error saving to file:', fileError);
+             res.status(500).json({ error: 'Error saving data to file' });
+            return;
+        }
+
         res.json(data);
+
     } catch (error) {
         console.error("Proxy Server Error:", error);
         res.status(500).json({ error: 'Error fetching data from API' });
