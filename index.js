@@ -24,7 +24,7 @@ app.use(cors());
 
 app.get('/api/megasena', async (req, res) => { 
     try {
-        const response = await fetch('https://loteriascaixa-api.herokuapp.com/api/megasena');
+        const response = await fetch('https://loteriascaixa-api.herokuapp.com/');
         if (!response.ok) {
             const errorText = await response.text();
             console.error("Mega Sena API Error:", response.status, errorText);
