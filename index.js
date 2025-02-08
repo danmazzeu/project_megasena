@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import fetch from 'node-fetch';
+import axios from 'axios';
 import fs from 'fs/promises';
 
 const app = express();
@@ -26,20 +26,15 @@ app.use(cors({
 
 app.get('/', async (req, res) => {
     try {
-        const response = await fetch('https://loteriascaixa-api.herokuapp.com/api/megasena');
-        if (!response.ok) {
-            const errorText = await response.text();
-            console.error("Mega Sena API Error:", response.status, errorText);
-            throw new Error(`Mega Sena API returned ${response.status}: ${errorText}`);  
-        }
-        const data = await response.json();
-        
+        const response = await axios.get('https://loteriascaixa-api.herokuapp.com/api/megasena');
+        const data = response.data;
+
         try {
-            await fs.writeFile('backup.json', JSON.stringify(data, null, 2));
-            console.log('Data saved to backup.json');
+            await fs.writeFile('backup.json', JSON.stringify(data, null, 2), { flag: 'w' });
+            console.log("Backup file updated successfully.");
         } catch (fileError) {
             console.error('Error saving to file:', fileError);
-             res.status(500).json({ error: 'Error saving data to file' });
+            res.status(500).json({ error: 'Error saving data to file' });
             return;
         }
 
@@ -47,6 +42,9 @@ app.get('/', async (req, res) => {
 
     } catch (error) {
         console.error("Proxy Server Error:", error);
+        if (error.response) {
+            console.error("Mega Sena API Error:", error.response.status, error.response.data);
+        }
         res.status(500).json({ error: 'Error fetching data from API' });
     }
 });
