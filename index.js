@@ -31,6 +31,7 @@ app.get('/', async (req, res) => {
 
         if (response.status === 200 && response.data) {
             try {
+                await fs.promises.unlink('backup.json');
                 await fs.writeFile('backup.json', JSON.stringify(response.data, null, 2), { flag: 'w' });
                 console.log("Backup file updated successfully.");
             } catch (fileError) {
