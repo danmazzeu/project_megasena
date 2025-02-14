@@ -1,13 +1,12 @@
 import express from 'express';
 import cors from 'cors';
 import axios from 'axios';
-import fs from 'fs';
-import path from 'path';
-
+import fs from 'fs'; // Importando fs
+import path from 'path'; // Importando path
 
 const app = express();
 const backupFile = path.join(__dirname, 'backup.json');
-const port = 3000;
+const port = process.env.PORT || 3000; // Usando variável de ambiente para a porta
 
 const allowedOrigins = [
     'https://danmazzeu.github.io',
@@ -43,8 +42,8 @@ app.get('/', async (req, res) => {
             const backupData = fs.readFileSync(backupFile, 'utf8');
             res.json(JSON.parse(backupData));
         } else {
-            // Se não houver backup e falhar a API, retorna um erro
-            res.status(500).json({ error: 'Erro ao buscar dados e não há backup disponível' });
+            // Se não houver backup e falhar a API, retorna um erro mais claro
+            res.status(500).json({ error: 'Erro ao buscar dados da API e não há backup disponível' });
         }
     }
 });
