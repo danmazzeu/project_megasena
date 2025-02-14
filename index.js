@@ -8,7 +8,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Configurando CORS para permitir localhost e o domínio de produção
-const allowedOrigins = ['https://megalumni.com.br', 'http://localhost:3000'];
+const allowedOrigins = ['https://megalumni.com.br', 'http://localhost:5500'];
 
 app.use(cors({
     origin: function(origin, callback) {
