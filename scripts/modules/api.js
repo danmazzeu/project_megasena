@@ -1,5 +1,5 @@
 import { loading } from "./loading.js";
-import * as fs from 'fs/promises'; // Importa o módulo fs para trabalhar com arquivos
+import fs from 'fs/promises';
 
 async function api() {
     loading(true, 'Sincronizando dados', 'Aguarde...');
