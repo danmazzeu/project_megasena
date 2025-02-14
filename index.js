@@ -1,26 +1,9 @@
-import express from 'express';
-import cors from 'cors';
-import axios from 'axios';
+const express = require('express');
+const axios = require('axios');
+const fs = require('fs');
+const path = require('path');
 
 const app = express();
-const port = 3001;
-
-const allowedOrigins = [
-    'https://danmazzeu.github.io',
-    'https://megalumni.com.br',
-    'https://www.megalumni.com.br',
-    'http://localhost'
-];
-
-app.use(cors({
-    origin: function (origin, callback) {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    }
-}));
 
 app.get('/', async (req, res) => {
     try {
@@ -31,10 +14,24 @@ app.get('/', async (req, res) => {
         if (error.response) {
             console.error("Mega Sena API Error:", error.response.status, error.response.data);
         }
-        res.status(500).json({ error: 'Error fetching data from API' });
+        
+        fs.readFile(path.join(__dirname, 'backup.json'), 'utf8', (err, data) => {
+            if (err) {
+                console.error("Error reading backup file:", err);
+                return res.status(500).json({ error: 'Error fetching data from API and backup' });
+            }
+            
+            try {
+                const backupData = JSON.parse(data);
+                res.json(backupData);
+            } catch (parseError) {
+                console.error("Error parsing backup file:", parseError);
+                res.status(500).json({ error: 'Error parsing backup data' });
+            }
+        });
     }
 });
 
-app.listen(port, () => {
-    console.log(`Proxy server running on port ${port}`);
+app.listen(3000, () => {
+    console.log('Server running on port 3000');
 });

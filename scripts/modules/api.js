@@ -24,7 +24,7 @@ function saveBackup(data) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'backup_api.json';
+    a.download = 'backup.json';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
