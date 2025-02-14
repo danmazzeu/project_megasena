@@ -29,24 +29,25 @@ app.get('/', async (req, res) => {
     try {
         const response = await axios.get('https://loteriascaixa-api.herokuapp.com/api/megasena');
 
-        if (response.data) {
+        if (response.status === 200 && response.data) {
             try {
-                await fs.writeFile('backup.json', JSON.stringify(response.data, null, 2));
+                await fs.promises.writeFile('backup.json', JSON.stringify(response.data, null, 2));
                 console.log("Backup file updated successfully.");
+                res.json(response.data); // Send the data ONLY after successful backup
             } catch (fileError) {
                 console.error('Error saving to file:', fileError);
+                // If backup fails, still send the API data, but log the error.
                 res.json(response.data);
-                return;
             }
-            res.json(response.data);
         } else {
             console.error("Mega Sena API returned unexpected response:", response.status, response.data);
+            // Fallback to backup ONLY if API fails
             try {
-                const backupData = await fs.readFile('backup.json', 'utf8');
+                const backupData = await fs.promises.readFile('backup.json', 'utf8');
                 res.json(JSON.parse(backupData));
             } catch (backupError) {
                 console.error("Error reading backup file:", backupError);
-                res.status(500).json({ error: 'Error fetching data from API and backup' });
+                res.status(500).json({ error: 'Error fetching data: API and backup failed' });
             }
         }
 
@@ -57,11 +58,11 @@ app.get('/', async (req, res) => {
         }
 
         try {
-            const backupData = await fs.readFile('backup.json', 'utf8');
+            const backupData = await fs.promises.readFile('backup.json', 'utf8');
             res.json(JSON.parse(backupData));
         } catch (backupError) {
             console.error("Error reading backup file:", backupError);
-            res.status(500).json({ error: 'Error fetching data from API and backup' });
+            res.status(500).json({ error: 'Error fetching data: API and backup failed' });
         }
     }
 });
