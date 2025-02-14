@@ -1,8 +1,9 @@
-const express = require('express');
-const axios = require('axios');
-const fs = require('fs');
+import express from 'express';
+import cors from 'cors';
+import axios from 'axios';
 
 const app = express();
+const port = 3001;
 
 app.use(cors());
 
@@ -15,24 +16,10 @@ app.get('/', async (req, res) => {
         if (error.response) {
             console.error("Mega Sena API Error:", error.response.status, error.response.data);
         }
-        
-        fs.readFile('backup.json', 'utf8', (err, data) => {
-            if (err) {
-                console.error("Error reading backup file:", err);
-                return res.status(500).json({ error: 'Error fetching data from API and backup' });
-            }
-            
-            try {
-                const backupData = JSON.parse(data);
-                res.json(backupData);
-            } catch (parseError) {
-                console.error("Error parsing backup file:", parseError);
-                res.status(500).json({ error: 'Error parsing backup data' });
-            }
-        });
+        res.status(500).json({ error: 'Error fetching data from API' });
     }
 });
 
-app.listen(3000, () => {
-    console.log('Server running on port 3000');
+app.listen(port, () => {
+    console.log(`Proxy server running on port ${port}`);
 });
