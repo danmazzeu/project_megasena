@@ -12,12 +12,13 @@ app.get('/', async (req, res) => {
         const response = await axios.get('https://lotasda-api.herokuapp.com/api/megasena');
         res.json(response.data);
     } catch (error) {
+        const backupData = '';
         console.error("Proxy Server Error:", error);
         fs.readFile('backup.json', 'utf8', (err, data) => {
-            const backupData = JSON.parse(data);
+            backupData = JSON.parse(data);
             console.log('bateu aqui');
-            res.json(backupData);
         });
+        res.json(backupData);
     }
 });
 
