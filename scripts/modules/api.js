@@ -18,4 +18,28 @@ async function api() {
     }
 }
 
-export default api;
+// Função para salvar os dados como um arquivo JSON
+function saveBackup(data) {
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'backup_api.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+// Função para detectar o atalho Ctrl + C + B
+function detectCtrlCB(event) {
+    if (event.ctrlKey && event.key === 'b') {
+        event.preventDefault(); // Evitar o comportamento padrão
+        api().then((data) => {
+            saveBackup(data);
+        });
+    }
+}
+
+// Adicionando o ouvinte para o evento de tecla
+document.addEventListener('keydown', detectCtrlCB);
