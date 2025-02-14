@@ -1,5 +1,5 @@
 import { loading } from "./loading.js";
-import fs from 'fs/promises';
+import fs from './fs/promises';
 
 async function api() {
     loading(true, 'Sincronizando dados', 'Aguarde...');
@@ -11,7 +11,6 @@ async function api() {
         }
         const data = await response.json();
 
-        // Salva os dados em backup.json
         try {
             await fs.writeFile('backup.json', JSON.stringify(data, null, 2), { flag: 'w' });
             console.log("Backup atualizado com sucesso.");
@@ -24,11 +23,10 @@ async function api() {
     } catch (error) {
         console.error("Erro ao buscar dados:", error);
 
-        // Tenta ler os dados do backup.json
         try {
             const backupData = await fs.readFile('backup.json', 'utf8');
             console.log("Dados carregados do backup.");
-            loading(false); // Remove o loading de erro, se houver
+            loading(false);
             return JSON.parse(backupData);
         } catch (backupError) {
             console.error("Erro ao ler o arquivo de backup:", backupError);
