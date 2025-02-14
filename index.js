@@ -31,10 +31,10 @@ app.get('/', async (req, res) => {
             try {
                 await fs.promises.writeFile('backup.json', JSON.stringify(response.data, null, 2));
                 console.log("Backup file updated successfully.");
-                res.json(response.data);
+                //res.json(response.data);
             } catch (fileError) {
                 console.error('Error saving to file:', fileError);
-                res.json(response.data);
+                //res.json(response.data);
             }
         } else {
             console.error("Mega Sena API returned unexpected response:", response.status, response.data);
