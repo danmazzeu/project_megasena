@@ -1,8 +1,11 @@
 import express from 'express';
 import cors from 'cors';
 import axios from 'axios';
+import fs from 'fs';
+import path from 'path';
 
 const app = express();
+const backupFile = path.join(__dirname, 'backup.json');
 const port = 3001;
 
 const allowedOrigins = [
@@ -25,13 +28,17 @@ app.use(cors({
 app.get('/', async (req, res) => {
     try {
         const response = await axios.get('https://loteriascaixa-api.herokuapp.com/api/megasena');
+        fs.writeFileSync(backupFile, JSON.stringify(response.data), 'utf8');
         res.json(response.data);
     } catch (error) {
-        console.error("Proxy Server Error:", error);
-        if (error.response) {
-            console.error("Mega Sena API Error:", error.response.status, error.response.data);
+        console.error("Erro ao buscar dados da API:", error);
+    
+        if (fs.existsSync(backupFile)) {
+            const backupData = fs.readFileSync(backupFile, 'utf8');
+            res.json(JSON.parse(backupData));
+        } else {
+            res.status(500).json({ error: 'Erro ao buscar dados da API e não há backup disponível' });
         }
-        res.status(500).json({ error: 'Error fetching data from API' });
     }
 });
 
