@@ -29,7 +29,7 @@ app.get('/', async (req, res) => {
     try {
         const response = await axios.get('https://loteriascaixa-api.herokuapp.com/api/megasena');
 
-        if (response.status === 200 && response.data) {
+        if (response.data) {
             try {
                 await fs.writeFile('backup.json', JSON.stringify(response.data, null, 2));
                 console.log("Backup file updated successfully.");
