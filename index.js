@@ -10,7 +10,7 @@ app.use(cors());
 
 app.get('/', async (req, res) => {
     try {
-        const response = await axios.get('https://lotapp.com/api/megasena');
+        const response = await axios.get('https://loteriascaixa-api.herokuapp.com/api/megasena');
         res.json(response.data);
     } catch (error) {
         console.error("Proxy Server Error:", error);
