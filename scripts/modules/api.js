@@ -4,7 +4,7 @@ import fs from 'fs';  // Importa o módulo fs do Node.js
 // Função para salvar dados no backup.json
 function saveBackup(data) {
     try {
-        fs.writeFileSync('backup.json', JSON.stringify(data), 'utf8');
+        fs.writeFileSync('../backup.json', JSON.stringify(data), 'utf8');
         console.log('Backup salvo com sucesso!');
     } catch (error) {
         console.error("Erro ao salvar o backup:", error);
@@ -14,7 +14,7 @@ function saveBackup(data) {
 // Função para carregar os dados do backup.json
 function loadBackup() {
     try {
-        const data = fs.readFileSync('backup.json', 'utf8');
+        const data = fs.readFileSync('../backup.json', 'utf8');
         return JSON.parse(data);  // Converte o conteúdo do arquivo JSON para um objeto
     } catch (error) {
         console.error("Erro ao carregar o backup:", error);
