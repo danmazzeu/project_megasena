@@ -28,16 +28,27 @@ app.use(cors({
 app.get('/', async (req, res) => {
     try {
         const response = await axios.get('https://loteriascaixa-api.herokuapp.com/api/megasena');
-        const data = response.data;
 
-        try {
-            await fs.writeFile('backup.json', JSON.stringify(data, null, 2), { flag: 'w' });
-            console.log("Backup file updated successfully.");
-        } catch (fileError) {
-            console.error('Error saving to file:', fileError);
+        if (response.status === 200 && response.data) {
+            try {
+                await fs.writeFile('backup.json', JSON.stringify(response.data, null, 2), { flag: 'w' });
+                console.log("Backup file updated successfully.");
+            } catch (fileError) {
+                console.error('Error saving to file:', fileError);
+                res.json(response.data);
+                return;
+            }
+            res.json(response.data);
+        } else {
+            console.error("Mega Sena API returned unexpected response:", response.status, response.data);
+            try {
+                const backupData = await fs.readFile('backup.json', 'utf8');
+                res.json(JSON.parse(backupData));
+            } catch (backupError) {
+                console.error("Error reading backup file:", backupError);
+                res.status(500).json({ error: 'Error fetching data from API and backup' });
+            }
         }
-
-        res.json(data);
 
     } catch (error) {
         console.error("Proxy Server Error:", error);
@@ -47,7 +58,6 @@ app.get('/', async (req, res) => {
 
         try {
             const backupData = await fs.readFile('backup.json', 'utf8');
-            console.log("Serving data from backup.json");
             res.json(JSON.parse(backupData));
         } catch (backupError) {
             console.error("Error reading backup file:", backupError);
