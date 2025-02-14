@@ -14,7 +14,6 @@ async function api() {
     } catch (error) {
         console.error("Error fetching data:", error);
         loading(true, 'Manutenção', 'Servidor temporariamente em manutenção. Tente novamente mais tarde.');
-        return [];
     }
 }
 
