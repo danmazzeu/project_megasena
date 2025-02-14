@@ -1,7 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 import axios from 'axios';
-import fs from 'fs/promises';
 
 const app = express();
 const port = 3001;
