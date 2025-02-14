@@ -8,7 +8,22 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Habilitando CORS
-app.use(cors());
+const allowedOrigins = [
+    'https://danmazzeu.github.io',
+    'https://megalumni.com.br',
+    'https://www.megalumni.com.br',
+    'http://localhost'
+];
+
+app.use(cors({
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    }
+}));
 
 // Caminho do arquivo de backup
 const backupFilePath = path.join(__dirname, 'backup.json');
