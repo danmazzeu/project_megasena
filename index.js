@@ -30,7 +30,7 @@ app.get('/', async (req, res) => {
         const data = response.data;
 
         try {
-            await fs.writeFile('backup.json', JSON.stringify(data, null, 2), { flag: 'w' });
+            await fs.promises.writeFile('backup.json', JSON.stringify(data, null, 2), { flag: 'w' });
             console.log("Backup file updated successfully.");
         } catch (fileError) {
             console.error('Error saving to file:', fileError);
