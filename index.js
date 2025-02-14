@@ -13,10 +13,10 @@ app.get('/', async (req, res) => {
         res.json(response.data);
     } catch (error) {
         console.error("Proxy Server Error:", error);
-        if (error.response) {
-            console.error("Mega Sena API Error:", error.response.status, error.response.data);
-        }
-        res.status(500).json({ error: 'Error fetching data from API' });
+        fs.readFile('backup.json', 'utf8', (err, data) => {
+            const backupData = JSON.parse(data);
+            res.json(backupData);
+        });
     }
 });
 
