@@ -10,6 +10,7 @@
     background: linear-gradient(220deg, rgba(32,32,32,1) 0%, rgba(65,65,65,1) 46%, rgba(42,42,42,1) 46%, rgba(0,0,0,1) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#202020",endColorstr="#000000",GradientType=1);
     box-shadow: var(--number-shadow);
+    text-shadow: 1px 1px 1px #000;
 }
 
 .number > h2 {
