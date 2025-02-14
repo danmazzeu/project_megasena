@@ -31,7 +31,7 @@ app.get('/', async (req, res) => {
             console.error("Mega Sena API Error:", error.response.status, error.response.data);
         }
         
-        fs.readFile(path.join('backup.json'), 'utf8', (err, data) => {
+        fs.readFile('backup.json'), 'utf8', (err, data) => {
             if (err) {
                 console.error("Error reading backup file:", err);
                 return res.status(500).json({ error: 'Error fetching data from API and backup' });
