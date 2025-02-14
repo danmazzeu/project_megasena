@@ -5,6 +5,8 @@ const path = require('path');
 
 const app = express();
 
+app.use(cors());
+
 app.get('/', async (req, res) => {
     try {
         const response = await axios.get('https://loteriascaixa-api.herokuapp.com/api/megasena');
