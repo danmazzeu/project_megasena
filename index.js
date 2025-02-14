@@ -9,12 +9,13 @@ app.use(cors());
 
 app.get('/', async (req, res) => {
     try {
-        const response = await axios.get('https://loteriascaixa-api.herokuapp.com/api/megasena');
+        const response = await axios.get('https://lotasda-api.herokuapp.com/api/megasena');
         res.json(response.data);
     } catch (error) {
         console.error("Proxy Server Error:", error);
         fs.readFile('backup.json', 'utf8', (err, data) => {
             const backupData = JSON.parse(data);
+            console.log('bateu aqui');
             res.json(backupData);
         });
     }
