@@ -11,7 +11,8 @@ const allowedOrigins = [
     'https://megalumni.com.br',
     'https://www.megalumni.com.br',
     'http://localhost:3000',
-    'http://localhost:3001'
+    'http://localhost:3001',
+    'http://localhost:5500'
 ];
 
 app.use(cors({
@@ -30,7 +31,7 @@ app.get('/', async (req, res) => {
         const data = response.data;
 
         try {
-            await fs.promises.writeFile('backup.json', JSON.stringify(data, null, 2), { flag: 'w' });
+            await fs.writeFile('backup.json', JSON.stringify(data, null, 2), { flag: 'w' });
             console.log("Backup file updated successfully.");
         } catch (fileError) {
             console.error('Error saving to file:', fileError);
