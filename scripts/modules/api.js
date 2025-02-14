@@ -1,5 +1,4 @@
 import { loading } from "./loading.js";
-import fs from 'fs/promises';
 
 async function api() {
     loading(true, 'Sincronizando dados', 'Aguarde...');
@@ -11,30 +10,31 @@ async function api() {
         }
         const data = await response.json();
 
-        // Salva os dados em backup.json
+        // Backup to JSON file
         try {
-            await fs.writeFile('backup.json', JSON.stringify(data, null, 2), { flag: 'w' });
-            console.log("Backup atualizado com sucesso.");
-        } catch (error) {
-            console.error("Erro ao salvar o backup:", error);
+            const jsonData = JSON.stringify(data, null, 2); // Use null, 2 for pretty printing
+            const blob = new Blob([jsonData], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'megasena_backup.json'; // Choose your filename
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            console.log("Data backed up successfully!");
+        } catch (backupError) {
+            console.error("Error backing up data:", backupError);
+            // Consider displaying a message to the user about the backup failure.
         }
+
 
         loading(false);
         return data;
     } catch (error) {
-        console.error("Erro ao buscar dados:", error);
-
-        // Tenta ler os dados do backup.json
-        try {
-            const backupData = await fs.readFile('backup.json', 'utf8');
-            console.log("Dados carregados do backup.");
-            loading(false); // Remove o loading de erro, se houver
-            return JSON.parse(backupData);
-        } catch (backupError) {
-            console.error("Erro ao ler o arquivo de backup:", backupError);
-            loading(true, 'Manutenção', 'Servidor temporariamente em manutenção. Tente novamente mais tarde.');
-            return [];
-        }
+        console.error("Error fetching data:", error);
+        loading(true, 'Manutenção', 'Servidor temporariamente em manutenção. Tente novamente mais tarde.');
+        return [];
     }
 }
 
