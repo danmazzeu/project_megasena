@@ -31,17 +31,21 @@ app.get('/', async (req, res) => {
             try {
                 await fs.promises.writeFile('backup.json', JSON.stringify(response.data, null, 2));
                 console.log("Backup file updated successfully.");
-                //res.json(response.data);
+                res.json(response.data);
+                console.log('1');
             } catch (fileError) {
                 console.error('Error saving to file:', fileError);
-                //res.json(response.data);
+                res.json(response.data);
+                console.log('2');
             }
         } else {
             console.error("Mega Sena API returned unexpected response:", response.status, response.data);
             try {
                 const backupData = await fs.promises.readFile('backup.json', 'utf8');
                 res.json(JSON.parse(backupData));
+                console.log('3');
             } catch (backupError) {
+                console.log('4');
                 console.error("Error reading backup file:", backupError);
                 res.status(500).json({ error: 'Error fetching data: API and backup failed' });
             }
@@ -56,7 +60,9 @@ app.get('/', async (req, res) => {
         try {
             const backupData = await fs.promises.readFile('backup.json', 'utf8');
             res.json(JSON.parse(backupData));
+            console.log('5');
         } catch (backupError) {
+            console.log('6');
             console.error("Error reading backup file:", backupError);
             res.status(500).json({ error: 'Error fetching data: API and backup failed' });
         }
