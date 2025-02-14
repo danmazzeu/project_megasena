@@ -6,19 +6,10 @@ const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
-// Configurando CORS para permitir localhost e o domínio de produção
-const allowedOrigins = ['https://megalumni.com.br', 'http://localhost:5500'];
+const cors = require('cors');
 
 app.use(cors({
-    origin: function(origin, callback) {
-        // Permite origens que estão na lista de origens permitidas
-        if (allowedOrigins.includes(origin) || !origin) {  // O !origin permite requisições feitas diretamente, como o Postman
-            callback(null, true);
-        } else {
-            callback(new Error('Origin not allowed by CORS'));
-        }
-    }
+    origin: 'https://megalumni.com.br'
 }));
 
 // Caminho do arquivo de backup
@@ -51,20 +42,20 @@ function saveBackup(data) {
 // Rota principal
 app.get('/', async (req, res) => {
     try {
-        // Fazendo a requisição para a API externa
-        const response = await axios.get('https://projectmegasena-production.up.railway.app/');
+        // Tenta buscar os dados da API
+        const response = await axios.get('https://loteriascaixa-api.herokuapp.com/api/megasena');
         const data = response.data;
 
-        // Salva os dados no arquivo de backup
+        // Se os dados foram recebidos com sucesso, cria ou atualiza o arquivo de backup
         saveBackup(data);
 
         res.json(data); // Retorna os dados para o cliente
     } catch (error) {
         console.error("Erro ao buscar dados da API:", error);
-
+        
         // Se a API falhar, tenta carregar os dados do backup
         const backupData = readBackup();
-
+        
         if (backupData) {
             console.log('Dados carregados do backup.');
             res.json(backupData); // Retorna os dados do backup
@@ -76,5 +67,5 @@ app.get('/', async (req, res) => {
 
 // Inicia o servidor
 app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
 });
